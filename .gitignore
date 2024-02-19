@@ -1,0 +1,8 @@
+docs/**/*.log
+docs/**/*.bbl
+docs/**/*.aux
+docs/**/*.blg
+docs/**/*.run*
+docs/**/*.bcf
+docs/**/*.toc
+docs/**/*.pdf

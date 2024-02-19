@@ -1,0 +1,68 @@
+\documentclass[12pt]{report}
+\usepackage[
+    a4paper,
+    top=1cm,
+    bottom=2cm,
+    left=3cm,
+    right=3cm,
+    headheight=12pt,
+    includehead,
+    includefoot,
+    heightrounded
+]{geometry}
+\usepackage{graphicx}
+\usepackage{biblatex}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage[swedish]{babel}
+\usepackage[style=iso]{datetime2}
+
+\input{general-headings}
+
+\addbibresource{references.bib}
+
+\def\title{Rapportmall IV steg 2}
+\def\course{XXX000 Kursnamn (se kursplan)}
+
+\begin{document}
+
+\include{titlepage}
+
+\setcounter{secnumdepth}{0}
+\pagenumbering{roman}
+
+\include{foreword}
+
+\pagestyle{fancy}
+\fancyhf[L,R,O,E]{}
+\fancyhead[C]{\title}
+\fancyfoot[C]{\thepage}
+
+\fancypagestyle{plain}{%
+    \fancyhf[L,R,O,E]{}
+    \fancyhead[C]{\title}
+    \fancyfoot[C]{\thepage}
+}
+
+\include{summary}
+
+\setcounter{secnumdepth}{3}
+\tableofcontents
+\thispagestyle{fancy}
+
+\input{mainmatter-headings}
+
+\newpage
+\pagenumbering{arabic}
+
+\include{chapters/initial-chapter}
+\include{chapters/non-descript}
+\input{bibliography}
+\input{setup-appendix}
+\include{appendices/initial-appendix}
+\include{appendices/non-descript}
+
+\end{document}
