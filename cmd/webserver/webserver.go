@@ -19,6 +19,7 @@ func main() {
 	internal.Html(router)
 	internal.Auth(router)
 	internal.Api(router)
+	internal.Error(router)
 	router.Use(static.Serve("/", static.LocalFile("./web/public", true)))
 
 	router.Run(ip + ":" + port)
