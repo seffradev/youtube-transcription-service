@@ -1,3 +1,7 @@
+*
+!/**/
+!*.*
+
 # latex
 docs/**/*.log
 docs/**/*.bbl
@@ -20,4 +24,3 @@ go.work
 main
 .env
 vendor/
-webserver
