@@ -1,3 +1,4 @@
+# latex
 docs/**/*.log
 docs/**/*.bbl
 docs/**/*.aux
@@ -6,3 +7,17 @@ docs/**/*.run*
 docs/**/*.bcf
 docs/**/*.toc
 docs/**/*.pdf
+
+# go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+main
+.env
+vendor/
+webserver
