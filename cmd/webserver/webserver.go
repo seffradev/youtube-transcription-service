@@ -16,9 +16,10 @@ func main() {
 
 	router := gin.Default()
 
-	router.Use(static.Serve("/", static.LocalFile("./public", true)))
+	internal.Html(router)
 	internal.Auth(router)
 	internal.Api(router)
+	router.Use(static.Serve("/", static.LocalFile("./web/public", true)))
 
 	router.Run(ip + ":" + port)
 }
