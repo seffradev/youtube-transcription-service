@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(handleFetchResponse)
         .then(data => {
             displaySuccessMessage('Registration successful', 'registration-form');
-            window.location.href = '/welcome'; // Replace '/welcome
+            window.location.href = '/welcome'; // Replace '/welcome with correct path
         })
         .catch(error => {
             // Log the error and display a message to the user
@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(handleFetchResponse)
         .then(data => {
             displaySuccessMessage('Login successful', 'login-form');
+            window.location.href = '/dashboard'; // Replace '/dashboard with correct path
         })
         .catch(error => {
             // Log the error and display a message to the user
