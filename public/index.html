@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Transcription App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img src="https://http.cat/200.jpg" id="status-image" alt="picture of cat depicting status of request" />
+    <header>
+        <h1>YouTube Transcription Service</h1>
+        <!-- Navigation Links (Register, Login, etc.) -->
+    </header>
+    <main>
+        <!-- Registration Form -->
+        <form id="registration-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required minlength="8">
+            <button type="submit">Register</button>
+        </form>
+        
+        <!-- Login Form -->
+        <section>
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="login-username">Username or Email:</label>
+                <input type="text" id="login-username" name="username" placeholder="Username or Email" required>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <!-- Video Submission Form -->
+        <section>
+            <h2>Submit Youtube Video</h2>
+            <form id="video-submission-form">
+                <label for="video-url">Youtube Video URL:</label>
+                <input type="text" id="video-url" name="video-url" placeholder="YouTube Video URL" required>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <!-- Footer Content -->
+        <!-- Consider including copyright information, contact details, or links to privacy policy. -->
+        <p>&copy; 2024 Youtube Transcription App. All rights reserved.</p>
+        <p>For support, email us at: <a href="mailto:support@example.com">support@example.com</a></p>
+        <nav>
+            <a href="/privacy-policy.html">Privacy Policy</a> | <a href="/terms-of-service.html">Terms of Service</a>
+        </nav>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(handleFetchResponse)
         .then(data => {
             displaySuccessMessage('Registration successful', 'registration-form');
+            window.location.href = '/welcome'; // Replace '/welcome
         })
         .catch(error => {
             // Log the error and display a message to the user
