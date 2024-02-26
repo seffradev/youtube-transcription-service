@@ -26,6 +26,13 @@ får de transkriberingar de begär om systemet är överbelastat eller kraschar.
 E-postkön är en separat komponent som drivs av Apache Kafka.
 
 \paragraph{Transkriberingsmotor}
+Transkriberingsmotorn ska vara en separat komponent som hämtar från
+transkriberingskön. Efter hämtat meddelande från kön ska motorn hämta videon
+från YouTube och transkribera den. När transkriberingen är klar ska motorn
+lägga till den i databasen och skicka en notis till e-postkön att
+transkriberingen är klar. Sist ska motorn radera videon från disk för att
+frigöra utrymme. Transkriberingsmotorn implementeras i programmeringsspråket
+Python med hjälp av OpenAI:s Whisper.
 
 \paragraph{E-posttjänst}
 
