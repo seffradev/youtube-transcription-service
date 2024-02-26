@@ -35,6 +35,10 @@ frigöra utrymme. Transkriberingsmotorn implementeras i programmeringsspråket
 Python med hjälp av OpenAI:s Whisper.
 
 \paragraph{E-posttjänst}
+E-posttjänsten ska vara en separat komponent som hämtar från e-postkön. Efter
+hämtat meddelande från kön ska tjänsten skicka e-post till adressen med
+transkriberingen som en bifogad fil. E-posttjänsten implementeras i 
+programmeringsspråket Go.
 
 \paragraph{Backend}
 
