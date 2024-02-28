@@ -1,76 +1,102 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif; /* Ensures readability across devices */
+    font-family: Arial, sans-serif;
+    /* Ensures readability across devices */
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Helps with layout management */
+    box-sizing: border-box;
+    /* Helps with layout management */
 }
 
 header,
 footer {
-    text-align: center; /* Centers content for better focus */
+    text-align: center;
+    /* Centers content for better focus */
     padding: 20px 10px;
-    background-color: f4f4f4; /* Neutral color for less distraction */
+    background-color: f4f4f4;
+    /* Neutral color for less distraction */
 }
 
 main {
-    padding: 20px; /* Ensures content isn't flush against the screen edges */
+    padding: 20px;
+    /* Ensures content isn't flush against the screen edges */
 }
 
 .auth-form {
-    max-width: 400px; /* Limits form width for readability */
-    margin: auto; /* Centers form on the page */
+    max-width: 400px;
+    /* Limits form width for readability */
+    margin: auto;
+    /* Centers form on the page */
     padding: 20px;
-    border: 1px solid #ccc; /* Subtle border for form delineation */
-    border-radius: 5px; /* Softens the form edges */
+    border: 1px solid #ccc;
+    /* Subtle border for form delineation */
+    border-radius: 5px;
+    /* Softens the form edges */
 }
 
 .auth-form label {
-    display: block; /* Ensures labels are above inputs */
-    margin-bottom: 5px; /* Adds space between label and input */
+    display: block;
+    /* Ensures labels are above inputs */
+    margin-bottom: 5px;
+    /* Adds space between label and input */
 }
 
 /* Focus style for input fields */
 .auth-form input[type="text"],
 .auth-form input[type="email"],
 .auth-form input[type="password"] {
-    width: 100%; /* Ensures inputs stretch to form width */
-    padding: 10px; /* Adds internal space for text */
-    margin-bottom: 20px; /* Separates inputs for clarity */
-    border: 1px solid #ccc; /* Defines boundaries of inputs */
-    border-radius: 4px; /* Softens input edges */
+    /* Ensures inputs stretch to form width */
+    width: 100%;
+    /* Adds internal space for text */
+    padding: 10px;
+    /* Separates inputs for clarity */
+    margin-bottom: 20px;
+    /* Defines boundaries of inputs */
+    border: 1px solid #ccc;
+    /* Softens input edges */
+    border-radius: 4px;
 }
 
 .auth-form button {
-    width: 100%; /* Button width matches input fields */
-    padding: 10px; /* Comfortable click area */
-    background-color: #007bff; /* Primary action color */
-    color: white; /* Contrast color for readability */
-    border: none; /* Simplifies button appearance */
-    border-radius: 4px; /* Consistent with input styling */
-    cursor: pointer; /* Indicates button functionality */
+    /* Button width matches input fields */
+    width: 100%;
+    /* Comfortable click area */
+    padding: 10px;
+    /* Primary action color */
+    background-color: #007bff;
+    /* Contrast color for readability */
+    color: white;
+    /* Simplifies button appearance */
+    border: none;
+    /* Consistent with input styling */
+    border-radius: 4px;
+    /* Indicates button functionality */
+    cursor: pointer;
 }
 
 .auth-form button:hover {
-    background-color: #0056b3; /* Darker shade on hover for feedback */
+    /* Darker shade on hover for feedback */
+    background-color: #0056b3;
 }
 
 .error-message,
 .success-message {
-    color: #d9534f;
     /* Red for error */
+    color: #d9534f;
     text-align: center;
 }
 
 .success-message {
-    color: #5cb85c;
     /* Green for success */
+    color: #5cb85c;
 }
 
 /* Responsive Design */
 @media (max-wdth: 768px) {
     .auth-form {
-        width: calc(100% - 40px); /* Adjusts form width on smaller screens */
-        padding: 10px; /* Reduces padding for screen space conservation */
+        /* Adjusts form width on smaller screens */
+        width: calc(100% - 40px);
+        /* Reduces padding for screen space conservation */
+        padding: 10px;
     }
 }

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = e.target.elements['username'].value;
         const email = e.target.elements['email'].value;
         const password = e.target.elements['password'].value;
-        
+
         // Basic client-side validation for password length
         if (password.length < 8) {
             alert('Password must be at least 8 characters long.');
