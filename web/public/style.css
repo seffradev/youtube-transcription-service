@@ -1,123 +1,77 @@
-/* styles.css */
-
-/* Default styles */
-
-/* Form styling */
-form {
-    margin-bottom: 20px;
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Focus style for input fields */
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-    outline: none; /* Removes the default focus outline */
-    border: 2px solid #4fa1f0; /* Adds a blue border for a clear focus indication */
-    box-shadow: 0 0 5px #4fa1f0; /* Optionally adds a subtle glow effect */   
-}
-
-/* Focus styles for submit button */
-button[type="submit"]:focus {
-    outline: none; /* Removes the default focus outline */
-    border: 2px solid #4fa1f0; /* Adds a blue border for a clear focus indication */
-    box-shadow: 0 0 5px #4fa1f0; /* Optionally adds a subtle glow effect */  
-}
-
-button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* Header and footer styling */
 header,
 footer {
-    background-color: #222; /* Darker shade for footer */
-    color: #ddd; /* Lighter text for contrast */
-    padding: 20px 0;
-    font-size: 0.8rem; /* Smaller font size for footer content */
-}
-
-footer a {
-    color: #4fa1f0; /* Light blue color for links for better visibility */
-    text-decoration: none; /* Optional: Removes underline from links */
-}
-
-footer a:hover {
-    text-decoration: underline; /* Adds underline on hover for better interaction feedback */
-}
-
-/* Focus styles for interactive elements */
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="submit"]:focus {
-    outline: none;
-    border: 2px solid #4fa1f0; /* Example for input and button; adjust if needed for links */
-    box-shadow: 0 0 5px #4fa1f0; /* Optional glow effect focus */
-}
-
-a:focus { /* Adding focus styles for all links here */
-    outline: none;
-    color: #ff8800; /* Example color change for links on focus */
-    text-decoration: underline; /* Underline for links to indicate focus */
-}
-
-footer nav {
-    margin-top: 10px; /* Adds some space above the navigation links */
-}
-
-.error-message, .success-message {
-    color: #ff0000; /* Red color for error messages */
-    font-weight: bold;
-}
-
-.success-message {
-    color: #008000;  /* Green color for success messages */
+    text-align: center;
+    padding: 20px 10px;
+    background-color: f4f4f4;
 }
 
 main {
     padding: 20px;
 }
 
-#status-image {
-    width: 30%;
-    display: block;
-    margin: 2px auto;
-    padding: 0;
-    border-radius: 20px;
+.auth-form {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-/* Responsive design */
-@media screen and (max-width: 768px) {
-    /* Styles for smaller screens */
-    main {
-        padding: 10px;
-    }
+.auth-form label {
+    display: block;
+    margin-bottom: 5px;
+}
 
-    /* Adjust form inputs for smaller screens */
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="submit"] {
-        width: calc(100% - 20px); /* Adjust width to fit smaller screens */
+/* Focus style for input fields */
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    /* Adds a white border for a clear focus indication */
+    border-radius: 4px;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    background-color: #0056b3;
+}
+
+.error-message,
+.success-message {
+    color: #d9534f;
+    /* Red for error */
+    text-align: center;
+}
+
+.success-message {
+    color: #5cb85c;
+    /* Green for success */
+}
+
+/* Responsive Design */
+@media (max-wdth: 768px) {
+    .auth-form {
+        width: calc(100% - 40px);
+        padding: 10px;
     }
 }
