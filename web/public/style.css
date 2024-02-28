@@ -1,59 +1,58 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Ensures readability across devices */
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Helps with layout management */
 }
 
 header,
 footer {
-    text-align: center;
+    text-align: center; /* Centers content for better focus */
     padding: 20px 10px;
-    background-color: f4f4f4;
+    background-color: f4f4f4; /* Neutral color for less distraction */
 }
 
 main {
-    padding: 20px;
+    padding: 20px; /* Ensures content isn't flush against the screen edges */
 }
 
 .auth-form {
-    max-width: 400px;
-    margin: auto;
+    max-width: 400px; /* Limits form width for readability */
+    margin: auto; /* Centers form on the page */
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ccc; /* Subtle border for form delineation */
+    border-radius: 5px; /* Softens the form edges */
 }
 
 .auth-form label {
-    display: block;
-    margin-bottom: 5px;
+    display: block; /* Ensures labels are above inputs */
+    margin-bottom: 5px; /* Adds space between label and input */
 }
 
 /* Focus style for input fields */
 .auth-form input[type="text"],
 .auth-form input[type="email"],
 .auth-form input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    /* Adds a white border for a clear focus indication */
-    border-radius: 4px;
+    width: 100%; /* Ensures inputs stretch to form width */
+    padding: 10px; /* Adds internal space for text */
+    margin-bottom: 20px; /* Separates inputs for clarity */
+    border: 1px solid #ccc; /* Defines boundaries of inputs */
+    border-radius: 4px; /* Softens input edges */
 }
 
 .auth-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    width: 100%; /* Button width matches input fields */
+    padding: 10px; /* Comfortable click area */
+    background-color: #007bff; /* Primary action color */
+    color: white; /* Contrast color for readability */
+    border: none; /* Simplifies button appearance */
+    border-radius: 4px; /* Consistent with input styling */
+    cursor: pointer; /* Indicates button functionality */
 }
 
 .auth-form button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker shade on hover for feedback */
 }
 
 .error-message,
@@ -71,7 +70,7 @@ main {
 /* Responsive Design */
 @media (max-wdth: 768px) {
     .auth-form {
-        width: calc(100% - 40px);
-        padding: 10px;
+        width: calc(100% - 40px); /* Adjusts form width on smaller screens */
+        padding: 10px; /* Reduces padding for screen space conservation */
     }
 }

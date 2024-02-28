@@ -1,18 +1,19 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Registration Form Event Listener
+    // Event listener for the registration form submission
     const registrationForm = document.getElementById('registration-form');
     registrationForm.addEventListener('submit', (e) => {
         e.preventDefault(); // Prevent default form submission
-        // Extract input values
+        // Retrieves values from form inputs
         const username = e.target.elements['username'].value;
         const email = e.target.elements['email'].value;
         const password = e.target.elements['password'].value;
-        // Validate input data ( example: check if password meets requirements)
+        
+        // Basic client-side validation for password length
         if (password.length < 8) {
             alert('Password must be at least 8 characters long.');
-            return; // Exit function early to prevent form submission
+            return; // Stops the function if validation fails
         }
 
         // Handle registration (send data to server, etc.)
