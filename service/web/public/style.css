@@ -1,0 +1,131 @@
+/* Global Styles */
+*, *::before, *::after {
+    box-sizing: border-box; /* Make sure padding and borders are included in total width and height */
+}
+
+html,
+body {
+    /* Ensure the full height for both html and body */
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    /* Enable Flexbox */
+    display: flex;
+    /* Center horizontally */
+    justify-content: center;
+    /* Center vertically */
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Container wrapping all content to center everything together */
+.container {
+    /* Enable Flexbox */
+    display: flex;
+    /* Stack children vertically */
+    flex-direction: column;
+    /* Center horizontally */
+    align-items: center;
+    /* Center text for all child elements */
+    text-align: center;
+    /* Use full width */
+    width: 100%;
+    /* Maximum width for the container */
+    max-width: 400px;
+}
+
+header,
+footer {
+    /* Full width */
+    width: 100%;
+    padding: 20px 10px;
+    /* Neutral color for less distraction */
+    background-color: #f4f4f4;
+}
+
+main {
+    padding: 20px;
+}
+
+.auth-form {
+    width: 100%;
+    padding: 20px;
+    /* No external margins to interfer with centering */
+    margin: 0;
+    /* Subtle border for form delineation */
+    border: 1px solid #ccc;
+    /* Softens the form edges */
+    border-radius: 5px;
+}
+
+/* Specific Styles for Form Elements */
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form button {
+    width: calc(100% - 10px); /* Adjust width accounting for padding */
+    padding: 10px; /* Provide ample padding for text input */
+    margin-bottom: 20px; /* Space out elements vertically */
+    border: 1px solid #ccc; /* Standard border for inputs */
+    border-radius: 4px; /* Rounded corners for aesthetics */
+    display: block; /* Ensure full-width display */
+}
+
+.auth-form label,
+.auth-form input,
+.auth-form button {
+    /* Align elements in a vertical column */
+    display: block;
+    /* Full width for inputs and button */
+    width: 100%;
+    /* Adds space between form elements */
+    margin-bottom: 15px;
+}
+
+.auth-form input,
+.auth-form button {
+    /* Padding for form elements */
+    padding: 10px;
+    /* Border for inputs */
+    border: 1px solid #ccc;
+    /* Rounded corners for form elements */
+    border-radius: 4px;
+}
+
+.auth-form button {
+    /* Primary action color */
+    background-color: #007bff;
+    /* Contrast color for readability */
+    color: white;
+    /* Simplifies button appearance */
+    border: none;
+    /* Indicates button functionality */
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    /* Darker shade on hover for feedback */
+    background-color: #0056b3;
+}
+
+.error-message,
+.success-message {
+    /* Error message color */
+    color: #d9534f;
+    text-align: center;
+}
+
+.success-message {
+    /* Success message color */
+    color: #5cb85c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        /* Adjusts form width for smaller screens */
+        width: calc(100% - 40px);
+        /* Adjust padding for smaller screens */
+        padding: 10px;
+    }
+}

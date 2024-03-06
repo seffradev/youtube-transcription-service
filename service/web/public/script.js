@@ -1,20 +1,21 @@
 // script.js
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Registration Form Event Listener
+document.addEventListener('DOMContentLoaded', () => {
+    // Event listener for the registration form submission
     const registrationForm = document.getElementById('registration-form');
-    registrationForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-        // Extract input values
-        const username = registrationForm.elements['username'].value;
-        const email = registrationForm.elements['email'].value;
-        const password = registrationForm.elements['password'].value;
-        // Validate input data ( example: check if password meets requirements)
+    registrationForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent default form submission
+        // Retrieves values from form inputs
+        const username = e.target.elements['username'].value;
+        const email = e.target.elements['email'].value;
+        const password = e.target.elements['password'].value;
+
+        // Basic client-side validation for password length
         if (password.length < 8) {
-            displayErrorMessage('Password must be at least 8 characters long.');
-            return; // Exit function early to prevent form submission
+            alert('Password must be at least 8 characters long.');
+            return; // Stops the function if validation fails
         }
-        
+
         // Handle registration (send data to server, etc.)
         fetch('/api/register', {
             method: 'POST',
@@ -23,26 +24,26 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ username, email, password }),
         })
-        .then(handleFetchResponse)
-        .then(data => {
-            displaySuccessMessage('Registration successful', 'registration-form');
-            window.location.href = '/welcome'; // Replace '/welcome with correct path
-        })
-        .catch(error => {
-            // Log the error and display a message to the user
-            console.error('There has been a problem with your fetch operation:', error);
-            displayErrorMessage(error.message, 'registration-form');
-        });
+            .then(handleFetchResponse)
+            .then(data => {
+                displaySuccessMessage('Registration successful', 'registration-form');
+                window.location.href = '/welcome'; // Replace '/welcome with correct path
+            })
+            .catch(error => {
+                // Log the error and display a message to the user
+                console.error('There has been a problem with your fetch operation:', error);
+                displayErrorMessage(error.message, 'registration-form');
+            });
     });
 
     // Login Form Event Listener
     const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', function(event) {
+    loginForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent default form submission
         // Extract input values
         const username = loginForm.elements['username'].value;
         const password = loginForm.elements['password'].value;
-        
+
         // Handle login (send data to server, etc.)
         // You can make an AJAX request here to send form data to the server for login
         fetch('/api/login', {
@@ -52,38 +53,38 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ username, password }),
         })
-        .then(handleFetchResponse)
-        .then(data => {
-            displaySuccessMessage('Login successful', 'login-form');
-            window.location.href = '/dashboard'; // Replace '/dashboard with correct path
-        })
-        .catch(error => {
-            // Log the error and display a message to the user
-            console.error('There has been a problem with your fetch operation:', error);
-            displayErrorMessage(error.message, 'login-form');
-        });
+            .then(handleFetchResponse)
+            .then(data => {
+                displaySuccessMessage('Login successful', 'login-form');
+                window.location.href = '/dashboard'; // Replace '/dashboard with correct path
+            })
+            .catch(error => {
+                // Log the error and display a message to the user
+                console.error('There has been a problem with your fetch operation:', error);
+                displayErrorMessage(error.message, 'login-form');
+            });
     });
 
     // Video Submission Form Event Listener
     const videoSubmissionForm = document.getElementById('video-submission-form');
-    videoSubmissionForm.addEventListener('submit', function(event) {
+    videoSubmissionForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent default form submission
         // Extract input values
         const videoUrl = videoSubmissionForm.elements['video-url'].value;
-        
+
         // Handle video submission (send data to server, etc.)
         // You can make an AJAX request here to send video URL to the server for processing
         // Replace '/login' with your video submission endpoint
-        fetch('/api/url/' + videoUrl) 
-        .then(handleFetchResponse)
-        .then(data => {
-            displaySuccessMessage('Video submission successful', 'video-submission-form');
-        })
-        .catch(error => {
-            // Log the error and display a message to the user
-            console.error('There has been a problem with your fetch operation:', error);
-            displayErrorMessage(error.message, 'video-submission-form');
-        });
+        fetch('/api/url/' + videoUrl)
+            .then(handleFetchResponse)
+            .then(data => {
+                displaySuccessMessage('Video submission successful', 'video-submission-form');
+            })
+            .catch(error => {
+                // Log the error and display a message to the user
+                console.error('There has been a problem with your fetch operation:', error);
+                displayErrorMessage(error.message, 'video-submission-form');
+            });
     });
 });
 

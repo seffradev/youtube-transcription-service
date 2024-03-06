@@ -1,0 +1,55 @@
+# Notes and Adjustments
+# Go-based Application: You need to replace ./go-app with the path to your Go application and main.go with the name of your Go program entry point.
+# Apache Kafka: This setup includes Zookeeper, which Kafka requires to run. Adjust environment variables as necessary for your Kafka setup.
+# MariaDB: Replace rootpassword with a secure root password and mydatabase with your desired database name.
+# Postfix Container: This uses catatnight/postfix, a simple image for Postfix. Customize the maildomain and smtp_user with your domain and desired SMTP user credentials. Note that running a mail server involves additional configuration for security and deliverability, which is beyond this basic setup.
+# Python Container: Replace ./python-app with the path to your Python application and main.py with your Python program entry point.
+# Volumes: A persistent volume for MariaDB is defined to ensure data persistence. Ensure volume paths and configurations align with your project structure and storage requirements.
+# Networks: By default, Docker Compose sets up a single network for your app's services to communicate with each other. If you need isolated networks or custom configurations, you can define them under a networks key.
+# Security: This configuration includes default passwords and configurations for simplicity. For production environments, ensure you use secure passwords, consider network configurations, and review each service's security best practices.
+# After creating this docker-compose.yml, you can start all services with docker-compose up and stop them with docker-compose down. Remember, this file is a starting point, and further customization might be necessary to fit your specific project requirements.
+
+version: '3.8'
+services:
+    service:
+        image: golang:latest # Use the official Golang image
+        volumes:
+            - ../service:/go/src/app # Mount your Go app directory to the container
+        working_dir: /go/src/app
+        command: go run cmd/webserver/webserver.go
+        ports:
+            - "8080:8080" # Map port 8080 of the container to port 8080 on the host
+        depends_on:
+            - mariadb
+            - kafka
+    zookeeper:
+        image: wurstmeister/zookeeper
+    kafka:
+        image: wurstmeister/kafka
+        environment:
+            KAFKA_ADVERTISED_HOST_NAME: kafka
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        depends_on:
+            - zookeeper
+    mariadb:
+        image: mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword # Use a secure password
+            MYSQL_DATABASE: mydatabase # Name of the database to create
+        volumes:
+            - mariadb-data:/var/lib/mysql
+    postfix:
+        image: catatnight/postfix # This is a basic Postfix image for sending emails
+        environment:
+            maildomain: mydomain.com # Your domain
+            smtp_user: user:pwd # SMTP user:password
+    transcription:
+        image: python:latest # Use the official Python image
+        volumes:
+            - ../transcription:/usr/src/app # Mount your Python app directory to the container
+        working_dir: /usr/src/app
+        command: python main.py # Replace 'main.py' with your Python file
+        depends_on:
+            - kafka
+volumes:
+    mariadb-data: # Persistent volume for MariaDB data
