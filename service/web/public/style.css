@@ -1,11 +1,14 @@
 /* Global Styles */
+*, *::before, *::after {
+    box-sizing: border-box; /* Make sure padding and borders are included in total width and height */
+}
+
 html,
 body {
     /* Ensure the full height for both html and body */
     height: 100vh;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     /* Enable Flexbox */
     display: flex;
     /* Center horizontally */
@@ -53,6 +56,19 @@ main {
     border: 1px solid #ccc;
     /* Softens the form edges */
     border-radius: 5px;
+}
+
+/* Specific Styles for Form Elements */
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form button {
+    width: calc(100% - 10px); /* Adjust width accounting for padding */
+    padding: 10px; /* Provide ample padding for text input */
+    margin-bottom: 20px; /* Space out elements vertically */
+    border: 1px solid #ccc; /* Standard border for inputs */
+    border-radius: 4px; /* Rounded corners for aesthetics */
+    display: block; /* Ensure full-width display */
 }
 
 .auth-form label,
