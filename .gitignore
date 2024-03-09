@@ -12,6 +12,7 @@ docs/**/*.run*
 docs/**/*.bcf
 docs/**/*.toc
 docs/**/*.pdf
+docs/**/*.pdf_tex
 
 # go
 *.exe
