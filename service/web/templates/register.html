@@ -16,29 +16,43 @@
 </head>
 
 <body>
+    <header>
+        <!-- Clear indication of page purpose -->
+        <h1>Register for YouTube Transcription Service</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/login">Login</a> |
+            <a href="/register">Register</a>
+        </nav>
+    </header>
     <div class="container">
         <img src="https://http.cat/200.jpg" id="status-image" alt="picture of cat depicting status of request" />
-        <header>
-            <!-- Clear indication of page purpose -->
-            <h1>Register for YouTube Transcription Service</h1>
-        </header>
         <main>
             <!-- Registration form with accessible input fields -->
             <form id="registration-form" class="auth-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <label for="email">Email:</label>
+                <label for="name">Name</label>
+                <input type="name" id="name" name="name" placeholder="Jane Doe" required>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password" required minlength="8">
                 <button type="submit">Register</button>
             </form>
         </main>
-        <footer>
-            <!-- Footer with copyright and contact information -->
-            <p>&copy; 2024 Youtube Transcription App. All rights reserved.</p>
-            <a href="mailto:support@example.com">support@example.com</a>
-        </footer>
     </div>
+    <footer>
+        <!-- Footer content providing copyright and contact information -->
+        <p>&copy; 2024 YouTube Transcription App. All rights reserved.</p>
+        <!-- Consider including copyright information, contact details, or links to privacy policy. -->
+        <p>For support, email us at:
+            <a href="mailto:support@example.com">support@example.com</a>
+        </p>
+        <!-- Additional navigation links for legal and privacy information -->
+        <nav>
+            <a href="/privacy-policy">Privacy Policy</a> |
+            <a href="/terms-of-service">Terms of Service</a>
+        </nav>
+    </footer>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 /* Global Styles */
-*, *::before, *::after {
-    box-sizing: border-box; /* Make sure padding and borders are included in total width and height */
+*,
+*::before,
+*::after {
+    /* Make sure padding and borders are included in total width and height */
+    box-sizing: border-box;
 }
 
 html,
@@ -11,6 +14,7 @@ body {
     padding: 0;
     /* Enable Flexbox */
     display: flex;
+    flex-direction: column;
     /* Center horizontally */
     justify-content: center;
     /* Center vertically */
@@ -31,31 +35,51 @@ body {
     /* Use full width */
     width: 100%;
     /* Maximum width for the container */
-    max-width: 400px;
+    max-width: 100%;
+    /* Adjust the maximum width as needed */
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    margin: 20px;
+    width: 60%;
 }
 
 header,
 footer {
     /* Full width */
     width: 100%;
+    margin: 0;
+    position: absolute;
+    top: 0;
     padding: 20px 10px;
     /* Neutral color for less distraction */
     background-color: #f4f4f4;
+    text-align: center;
+}
+
+footer {
+    top: initial;
+    bottom: 0;
 }
 
 main {
-    padding: 20px;
+    width: 100%;
 }
 
 .auth-form {
-    width: 100%;
-    padding: 20px;
+    width: 60%;
     /* No external margins to interfer with centering */
-    margin: 0;
-    /* Subtle border for form delineation */
-    border: 1px solid #ccc;
+    margin: 0 auto;
     /* Softens the form edges */
     border-radius: 5px;
+    /* Enable flexbox */
+    display: flex;
+    /* Stack children vertically */
+    flex-direction: column;
+    /* Center horizontally */
+    align-items: center;
 }
 
 /* Specific Styles for Form Elements */
@@ -63,12 +87,18 @@ main {
 .auth-form input[type="email"],
 .auth-form input[type="password"],
 .auth-form button {
-    width: calc(100% - 10px); /* Adjust width accounting for padding */
-    padding: 10px; /* Provide ample padding for text input */
-    margin-bottom: 20px; /* Space out elements vertically */
-    border: 1px solid #ccc; /* Standard border for inputs */
-    border-radius: 4px; /* Rounded corners for aesthetics */
-    display: block; /* Ensure full-width display */
+    width: 100%;
+    /* Adjust width accounting for padding */
+    padding: 10px;
+    /* Provide ample padding for text input */
+    margin-bottom: 20px;
+    /* Space out elements vertically */
+    border: 1px solid #ccc;
+    /* Standard border for inputs */
+    border-radius: 4px;
+    /* Rounded corners for aesthetics */
+    display: block;
+    /* Ensure full-width display */
 }
 
 .auth-form label,
