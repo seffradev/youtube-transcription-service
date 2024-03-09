@@ -16,28 +16,41 @@
 </head>
 
 <body>
+    <header>
+        <!-- Page heading for clarity -->
+        <h1>Login to YouTube Transcription Service</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/login">Login</a> |
+            <a href="/register">Register</a>
+        </nav>
+    </header>
     <div class="container">
         <img src="https://http.cat/200.jpg" id="status-image" alt="picture of cat depicting status of request" />
-        <header>
-            <!-- Page heading for clarity -->
-            <h1>Login to YouTube Transcription Service</h1>
-        </header>
         <main>
             <!-- Login form with structured and accessible fields -->
             <form id="login-form" class="auth-form">
-                <label for="login-username">Username or Email:</label>
-                <input type="text" id="login-username" name="username" placeholder="Username or Email" required>
-                <label for="login-password">Password:</label>
+                <label for="login-email">Email</label>
+                <input type="text" id="login-email" name="email" placeholder="Email" required>
+                <label for="login-password">Password</label>
                 <input type="password" id="login-password" name="password" placeholder="Password" required>
                 <button type="submit">Login</button>
             </form>
         </main>
-        <footer>
-            <!-- Copyright and support info -->
-            <p>&copy; 2024 Youtube Transcription App. All rights reserved.</p>
-            <a href="mailto:support@example.com">support@example.com</a>
-        </footer>
     </div>
+    <footer>
+        <!-- Footer content providing copyright and contact information -->
+        <p>&copy; 2024 YouTube Transcription App. All rights reserved.</p>
+        <!-- Consider including copyright information, contact details, or links to privacy policy. -->
+        <p>For support, email us at:
+            <a href="mailto:support@example.com">support@example.com</a>
+        </p>
+        <!-- Additional navigation links for legal and privacy information -->
+        <nav>
+            <a href="/privacy-policy">Privacy Policy</a> |
+            <a href="/terms-of-service">Terms of Service</a>
+        </nav>
+    </footer>
 </body>
 
 </html>
