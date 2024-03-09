@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-03-09T16:54:35.283Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="8N2L-yJopyzF4r8PPlWG" version="24.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-09T16:55:55.934Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="tpx8e62IGcj-kEssjaRB" version="24.0.4" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="939" dy="521" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -14,13 +14,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-1" value="Ladda ner videon från URL" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="40" y="110" width="120" height="40" as="geometry" />
+          <mxGeometry x="40" y="100" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="_XBkGqhqnQd2U8eVZXNx-3" target="_XBkGqhqnQd2U8eVZXNx-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-3" value="Starta transkribering med OpenAI Whisper" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="40" y="180" width="120" height="40" as="geometry" />
+          <mxGeometry x="40" y="160" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="_XBkGqhqnQd2U8eVZXNx-5" target="_XBkGqhqnQd2U8eVZXNx-7" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -28,14 +28,20 @@
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="_XBkGqhqnQd2U8eVZXNx-5" target="_XBkGqhqnQd2U8eVZXNx-10" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="UcNozbXcjYc5EnhzmKK8-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="_XBkGqhqnQd2U8eVZXNx-5" target="UcNozbXcjYc5EnhzmKK8-0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-5" value="Spara färdig transkribering till databas" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="40" y="250" width="120" height="40" as="geometry" />
+          <mxGeometry x="40" y="220" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-7" value="Radera videofil från filsystemet för att spara utrymme" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="40" y="320" width="120" height="40" as="geometry" />
+          <mxGeometry x="40" y="280" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="_XBkGqhqnQd2U8eVZXNx-10" value="Lägg till i e-postkö" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="190" y="250" width="120" height="40" as="geometry" />
+          <mxGeometry x="200" y="180" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="UcNozbXcjYc5EnhzmKK8-0" value="Markera som färdig i transkriberingskö" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="200" y="260" width="120" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
