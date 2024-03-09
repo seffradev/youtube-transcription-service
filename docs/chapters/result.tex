@@ -82,6 +82,15 @@ och användas av en obehörig användare.
 I databasen lagras lösenord inte i klartext utan i hashad form med hjälp av
 \verb|bcrypt|. 
 
+\subsubsection{Skalbarhet}
+Systemet som illustreras i Figur \ref{fig:system-nodes} är skalbart. Det går
+att lägga till fler instanser av transkriberingsmotorn och e-posttjänsten för
+att öka kapaciteten. Det går även att lägga till fler instanser av Apache Kafka,
+MariaDB och Apache ZooKeeper samt en lastbalanserare och en proxy för att öka
+webbapplikationens kapacitet. Byggs systemet enligt en sådan modell används
+arkitekturtermen "microservices" och ger horisontell skalbarhet samt ökad
+feltolerans. 
+
 \subsection{Användningsfall}
 
 \subsubsection{Skapa konto}
