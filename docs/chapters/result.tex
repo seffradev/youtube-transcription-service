@@ -73,7 +73,14 @@ konsument. Transkriberingsmotorn är en producent av e-postkön, medan e-posttj�
 behöver hantera vilket meddelande som är nästa att processera själva.
 
 \subsubsection{Säkerhet}
-Feltolerans, skalning, autentisering, auktorisering, kryptering
+Systemet bygger på HTTP Basic Authentication för att autentisera användare. Vid
+autentisering får användaren en enkel pollett som används för att auktorisera
+användaren att begära transkriberingar. Polletten är inte en JSON Web Token
+(JWT) utan en enkel sträng som lagras i en kaka. Polletten är enkel att stjäla
+och användas av en obehörig användare. 
+
+I databasen lagras lösenord inte i klartext utan i hashad form med hjälp av
+\verb|bcrypt|. 
 
 \subsection{Användningsfall}
 
