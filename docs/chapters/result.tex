@@ -69,7 +69,7 @@ Namnhantering för tjänsterna ligger via Apache ZooKeeper och Docker Compose so
 en inbyggd DNS-server. Tjänsterna kommunicerar med varandra via HTTP och Kafka.
 Webbapplikationen är en producent av transkriberingskön, medan transkriberingsmotorn är en
 konsument. Transkriberingsmotorn är en producent av e-postkön, medan e-posttjänsten
-är en konsument. Alla konsumenter är så kallade "komplicerade konsumenter" som
+är en konsument. Alla konsumenter är så kallade ''komplicerade konsumenter'' som
 behöver hantera vilket meddelande som är nästa att processera själva.
 
 \subsubsection{Säkerhet}
