@@ -65,7 +65,12 @@ Databasen ska vara en separat komponent som lagrar användare, transkriberingar
 och polletter. Databasen är en instans av den relationella databasen MariaDB.
 
 \subsubsection{Kommunikation}
-Namn, tid
+Namnhantering för tjänsterna ligger via Apache ZooKeeper och Docker Compose som har
+en inbyggd DNS-server. Tjänsterna kommunicerar med varandra via HTTP och Kafka.
+Webbapplikationen är en producent av transkriberingskön, medan transkriberingsmotorn är en
+konsument. Transkriberingsmotorn är en producent av e-postkön, medan e-posttjänsten
+är en konsument. Alla konsumenter är så kallade "komplicerade konsumenter" som
+behöver hantera vilket meddelande som är nästa att processera själva.
 
 \subsubsection{Säkerhet}
 Feltolerans, skalning, autentisering, auktorisering, kryptering
