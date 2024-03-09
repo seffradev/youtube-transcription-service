@@ -1,9 +1,39 @@
-<mxfile host="app.diagrams.net" modified="2024-03-09T16:56:46.773Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0" version="24.0.4" etag="OOdq-D13vgpDn3-p_iVQ" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-09T16:57:41.837Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="7o8fbJcJ4XNTRCKARYAN" version="24.0.4" type="github">
   <diagram name="Page-1" id="1q134keAwTXbtWhoL7U7">
-    <mxGraphModel>
+    <mxGraphModel dx="736" dy="408" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="qvvf1fp0euGCjeVCAfbQ-2" target="qvvf1fp0euGCjeVCAfbQ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-2" value="Hämta från e-postkö" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="qvvf1fp0euGCjeVCAfbQ-4" target="qvvf1fp0euGCjeVCAfbQ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-4" value="Skicka e-post via Postfix" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-6" value="Markera som färdig i e-postkö" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="qvvf1fp0euGCjeVCAfbQ-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100.00000000000011" y="260" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="qvvf1fp0euGCjeVCAfbQ-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160.0000000000001" y="240.0000000000001" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qvvf1fp0euGCjeVCAfbQ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="qvvf1fp0euGCjeVCAfbQ-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160.0000000000001" y="240" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
