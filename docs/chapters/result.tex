@@ -32,19 +32,19 @@ från YouTube och transkribera den. När transkriberingen är klar ska motorn
 lägga till den i databasen och skicka en notis till e-postkön att
 transkriberingen är klar. Sist ska motorn radera videon från disk för att
 frigöra utrymme. Transkriberingsmotorn implementeras i programmeringsspråket
-Python med hjälp av OpenAI:s Whisper.
+Python med hjälp av OpenAI:s Whisper. För flödesdiagram, se Figur \ref{fig:transcription-flowchart}.
 
 \paragraph{E-posttjänst}
 E-posttjänsten ska vara en separat komponent som hämtar från e-postkön. Efter
 hämtat meddelande från kön ska tjänsten skicka e-post till adressen med
 transkriberingen som en bifogad fil. E-posttjänsten implementeras i 
-programmeringsspråket Go.
+programmeringsspråket Go. För flödesdiagram, se Figur \ref{fig:email-flowchart}.
 
 \paragraph{Backend}
 Backend ska vara en separat komponent som tillåter användare att skapa ett
 konto, logga in och begära transkriberingar via ett RESTful API. Backend ska
 även hantera autentisering och auktorisering av användare. Backend implementeras
-i programmeringsspråket Go med hjälp av ramverket Gin.
+i programmeringsspråket Go med hjälp av ramverket Gin. För flödesdiagram, se Figur \ref{fig:system-flowchart}.
 
 \paragraph{Frontend}
 Frontend ska vara en separat komponent som tillåter användare att skapa ett
