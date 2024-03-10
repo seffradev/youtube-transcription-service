@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     registrationForm.addEventListener('submit', (e) => {
         e.preventDefault(); // Prevent default form submission
         // Retrieves values from form inputs
-        const username = e.target.elements['username'].value;
+        const name = e.target.elements['name'].value;
         const email = e.target.elements['email'].value;
         const password = e.target.elements['password'].value;
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, email, password }),
+            body: JSON.stringify({ name, email, password }),
         })
             .then(handleFetchResponse)
             .then(data => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent default form submission
         // Extract input values
-        const username = loginForm.elements['username'].value;
+        const email = loginForm.elements['email'].value;
         const password = loginForm.elements['password'].value;
 
         // Handle login (send data to server, etc.)
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ email, password }),
         })
             .then(handleFetchResponse)
             .then(data => {
