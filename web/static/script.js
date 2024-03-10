@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Handle registration (send data to server, etc.)
-        fetch('/api/register', {
+        fetch('/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Handle login (send data to server, etc.)
         // You can make an AJAX request here to send form data to the server for login
-        fetch('/api/login', {
+        fetch('/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
