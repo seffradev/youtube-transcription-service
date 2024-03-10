@@ -7,16 +7,16 @@ import (
 )
 
 func register(c *gin.Context) {
-	username := c.PostForm("username")
+	name := c.PostForm("name")
 	email := c.PostForm("email")
 	password := c.PostForm("password")
-	c.JSON(http.StatusOK, gin.H{"username": username, "email": email, "password": password})
+	c.JSON(http.StatusOK, gin.H{"name": name, "email": email, "password": password})
 }
 
 func login(c *gin.Context) {
-	username := c.PostForm("username")
+	email := c.PostForm("email")
 	password := c.PostForm("password")
-	c.JSON(http.StatusOK, gin.H{"username": username, "password": password})
+	c.JSON(http.StatusOK, gin.H{"email": email, "password": password})
 }
 
 func Auth(engine *gin.Engine) {
