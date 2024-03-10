@@ -14,7 +14,10 @@ func main() {
 		log.Print("Error loading .env file")
 	}
 
-    db, err := internal.Database(db_url)
+	db, err := internal.Database(db_url)
+	if err != nil {
+		log.Fatal("Error connecting to database")
+	}
 
 	router := gin.Default()
 
