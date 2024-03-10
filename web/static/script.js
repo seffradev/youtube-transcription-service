@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(handleFetchResponse)
             .then(data => {
                 displaySuccessMessage('Registration successful', 'registration-form');
-                window.location.href = '/welcome'; // Replace '/welcome with correct path
+                window.location.href = '/'; // Replace '/welcome with correct path
             })
             .catch(error => {
                 // Log the error and display a message to the user
