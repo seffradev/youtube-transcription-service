@@ -9,16 +9,18 @@ import (
 )
 
 func main() {
-	ip, port, err := internal.Environment()
+	ip, port, db_url, err := internal.Environment()
 	if err != nil {
 		log.Print("Error loading .env file")
 	}
+
+    db, err := internal.Database(db_url)
 
 	router := gin.Default()
 
 	internal.Html(router)
 	internal.Auth(router)
-	internal.Api(router)
+	internal.Api(router, db)
 	internal.Error(router)
 	router.Use(static.Serve("/", static.LocalFile("./web/static", true)))
 
