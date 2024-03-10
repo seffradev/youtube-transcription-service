@@ -11,7 +11,7 @@ import (
 func main() {
 	ip, port, db_url, err := internal.Environment()
 	if err != nil {
-		log.Print("Error loading .env file")
+		log.Fatal("Error loading .env file")
 	}
 
 	db, err := internal.Database(db_url)
