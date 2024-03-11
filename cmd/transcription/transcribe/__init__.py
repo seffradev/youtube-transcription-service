@@ -10,17 +10,18 @@ def download_video(urls) -> str:
     filename = ""
     codec = "mp3"
     ydl_opts = {
-        "format": "m4a/bestaudio/best",
+        "format": "mp3/bestaudio/best",
         "postprocessors": [{  # Extract audio using ffmpeg
             "key": "FFmpegExtractAudio",
             "preferredcodec": codec,
         }],
         "quiet": True,
         "external_downloader_args": ["-loglevel", "panic"],
-        "noprogress": True,
+        "noprogress": False,
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        error_code = ydl.download(urls)
         info = ydl.extract_info(urls[0], download=False)
 
         if not info:
@@ -29,7 +30,6 @@ def download_video(urls) -> str:
         id = info["id"]
         title = info["title"]
         filename = f"{title} [{id}].{codec}"
-        error_code = ydl.download(urls)
 
     return filename
 
@@ -37,7 +37,7 @@ def remove_video(filename):
     subprocess.run(["rm", filename])
 
 def transcribe(filename, language=None):
-    model = whisper.load_model("medium")
+    model = whisper.load_model("small")
     result = model.transcribe(filename)
     return result["text"]
 
