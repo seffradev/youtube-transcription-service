@@ -12,7 +12,7 @@ func Environment() (string, string, error) {
 
 	log.SetPrefix("[APP] ")
 
-	err = godotenv.Load("configs/.env")
+	err = godotenv.Load("configs/webserver/.env")
 	if err != nil {
 		return "", "", err
 	}
