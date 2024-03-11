@@ -11,7 +11,7 @@
 
 version: '3.8'
 services:
-    service:
+    webserver:
         image: golang:latest # Use the official Golang image
         volumes:
             - ../:/go/src/app # Mount your Go app directory to the container
@@ -22,15 +22,22 @@ services:
         depends_on:
             - mariadb
             - kafka
+        restart: unless-stopped
     zookeeper:
         image: wurstmeister/zookeeper
+        ports:
+            - "2181:2181"
+        restart: unless-stopped
     kafka:
         image: wurstmeister/kafka
         environment:
             KAFKA_ADVERTISED_HOST_NAME: kafka
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        ports:
+            - "9092:9092"
         depends_on:
             - zookeeper
+        restart: unless-stopped
     mariadb:
         image: mariadb
         environment:
@@ -38,18 +45,30 @@ services:
             MYSQL_DATABASE: mydatabase # Name of the database to create
         volumes:
             - mariadb-data:/var/lib/mysql
+        restart: unless-stopped
     postfix:
         image: catatnight/postfix # This is a basic Postfix image for sending emails
         environment:
             maildomain: mydomain.com # Your domain
             smtp_user: user:pwd # SMTP user:password
-    transcription:
-        image: python:latest # Use the official Python image
+        restart: unless-stopped
+    transcription-1:
+        build:
+            context: ../
+            dockerfile: build/transcription/Dockerfile
         volumes:
-            - ../cmd/transcription:/usr/src/app # Mount your Python app directory to the container
-        working_dir: /usr/src/app
-        command: python main.py # Replace 'main.py' with your Python file
+            - ../cmd/transcription:/app # Mount your Python app directory to the container
         depends_on:
             - kafka
+        restart: unless-stopped
+    transcription-2:
+        build:
+            context: ../
+            dockerfile: build/transcription/Dockerfile
+        volumes:
+            - ../cmd/transcription:/app # Mount your Python app directory to the container
+        depends_on:
+            - kafka
+        restart: unless-stopped
 volumes:
     mariadb-data: # Persistent volume for MariaDB data
