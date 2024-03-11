@@ -1,6 +1,7 @@
 *
 !/**/
 !*.*
+!**/*Dockerfile
 
 # latex
 docs/**/*.log
