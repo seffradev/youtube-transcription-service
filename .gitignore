@@ -27,3 +27,4 @@ vendor/
 
 # python
 venv/
+**/__pycache__/
