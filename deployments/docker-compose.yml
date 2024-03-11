@@ -38,6 +38,8 @@ services:
         depends_on:
             - zookeeper
         restart: unless-stopped
+        deploy:
+            replicas: 1
     mariadb:
         image: mariadb
         environment:
@@ -52,23 +54,20 @@ services:
             maildomain: mydomain.com # Your domain
             smtp_user: user:pwd # SMTP user:password
         restart: unless-stopped
-    transcription-1:
+    transcription:
         build:
             context: ../
             dockerfile: build/transcription/Dockerfile
+        environment:
+            BOOTSTRAP_SERVERS: kafka:9092
         volumes:
             - ../cmd/transcription:/app # Mount your Python app directory to the container
         depends_on:
+            - mariadb
+            - zookeeper
             - kafka
         restart: unless-stopped
-    transcription-2:
-        build:
-            context: ../
-            dockerfile: build/transcription/Dockerfile
-        volumes:
-            - ../cmd/transcription:/app # Mount your Python app directory to the container
-        depends_on:
-            - kafka
-        restart: unless-stopped
+        deploy:
+            replicas: 2
 volumes:
     mariadb-data: # Persistent volume for MariaDB data
