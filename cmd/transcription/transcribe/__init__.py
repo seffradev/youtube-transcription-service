@@ -10,7 +10,7 @@ def download_video(urls) -> str:
     filename = ""
     codec = "mp3"
     ydl_opts = {
-        "format": "mp3/bestaudio/best",
+        "format": f"{codec}/bestaudio/best",
         "postprocessors": [{  # Extract audio using ffmpeg
             "key": "FFmpegExtractAudio",
             "preferredcodec": codec,
@@ -18,6 +18,7 @@ def download_video(urls) -> str:
         "quiet": True,
         "external_downloader_args": ["-loglevel", "panic"],
         "noprogress": False,
+        "outtmpl": "%(id)s.%(ext)s",
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -28,8 +29,7 @@ def download_video(urls) -> str:
             raise ValueError("Failed to extract video info")
 
         id = info["id"]
-        title = info["title"]
-        filename = f"{title} [{id}].{codec}"
+        filename = f"{id}.{codec}"
 
     return filename
 
