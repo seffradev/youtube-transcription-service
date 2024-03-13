@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func url(c *gin.Context, producer *kafka.Producer) {
+func transcribe(c *gin.Context, producer *kafka.Producer) {
 	topic := "transcription"
 	id := c.Param("id")
 	log.Println("URL ID:", id)
@@ -28,7 +28,7 @@ func Api(engine *gin.Engine, producer *kafka.Producer) {
 		"manu":   "4321",
 	}))
 
-	api.GET("/url/:id", func(c *gin.Context) {
-		url(c, producer)
+	api.GET("/transcribe/:id", func(c *gin.Context) {
+		transcribe(c, producer)
 	})
 }
