@@ -32,21 +32,21 @@ def consume_loop(consumer):
         else:
             process_message(consumer, msg)
 
-def consume(consumer, topics):
+def consume(consumer, topics, producer_function):
     try:
         consumer.subscribe(topics)
         logging.info("Subscribed to topics: {}".format(topics))
         consume_loop(consumer)
     except KafkaException as e:
         logging.error('KafkaException: {}'.format(e))
-        sys.exit(2)
+        return 2
     except Exception as e:
         logging.error('Exception: {}'.format(e))
-        sys.exit(1)
+        return 1
     finally:
         consumer.close()
         shutdown()
-        sys.exit(0)
+    return 0
 
 def shutdown():
     global running
@@ -65,6 +65,7 @@ def main():
         'auto.offset.reset': 'earliest'
     }
 
+    topics = ['transcription']
     consumer = None
     try:
         logging.info("Attempting to create consumer")
@@ -72,8 +73,8 @@ def main():
     except Exception as e:
         logging.error('Failed to create consumer: {}'.format(e))
         sys.exit(2)
-    topics = ['transcription']
-    consume(consumer, topics)
+    result = consume(consumer, topics, lambda key, value: produce(producer, "transcription", key, value))
+    sys.exit(result)
 
 if __name__ == "__main__":
     main()
