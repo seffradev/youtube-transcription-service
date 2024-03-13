@@ -19,7 +19,7 @@ func Environment() (string, string, string, error) {
 
 	ip := os.Getenv("IP")
 	port := os.Getenv("PORT")
-	db_url := os.Getenv("DATABASE_URL")
+    bootstrapServers := os.Getenv("BOOTSTRAP_SERVERS")
 
-	return ip, port, db_url, err
+	return ip, port, bootstrapServers, err
 }
