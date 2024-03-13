@@ -8,26 +8,9 @@ import logging
 YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 running = True
 
-def process_message(consumer, msg):
-    url = msg.key()
-    status = msg.value()
-
-    if url is None:
-        logging.error("Received message with no key")
-    else:
-        url = url.decode("utf-8")
-    if status is None:
-        logging.error("Received message with no value")
-    else:
-        status = status.decode("utf-8").strip()
-
+def process_message(consumer, url, status):
     logging.info("Received url: {}".format(url))
     logging.info("Received status: {}".format(status))
-
-    if status != "pending":
-        logging.info("Skipping message with status: {}".format(status))
-        consumer.commit(asynchronous=False)
-        return url, status
 
     try:
         filename = download_video([YOUTUBE_BASE_URL + url])
@@ -55,7 +38,24 @@ def consume_loop(consumer, producer_function):
             elif msg.error():
                 raise KafkaException(msg.error())
         else:
-            url, status = process_message(consumer, msg)
+            url = msg.key()
+            status = msg.value()
+
+            if url is None:
+                logging.error("Received message with no key")
+            else:
+                url = url.decode("utf-8")
+            if status is None:
+                logging.error("Received message with no value")
+            else:
+                status = status.decode("utf-8").strip()
+
+            if status and status != "pending":
+                logging.info("Skipping message with status: {}".format(status))
+                consumer.commit(asynchronous=False)
+                continue
+
+            url, status = process_message(consumer, url, status)
             producer_function(url, status)
 
 def consume(consumer, topics, producer_function):
