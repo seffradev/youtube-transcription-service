@@ -1,15 +1,17 @@
 \chapter{Introduktion}
 
 \section{Bakgrund}
-Med en ökande mängd videoinnehåll på internet, växer behovet av tillgängliga textversioner för dessa videor för att öka tillgängligheten och förståelsen.
+Med den exponentiella tillväxten av digitalt videomaterial på plattformar som YouTube, har behovet av tillgängliga textversioner blivit alltmer angeläget. Detta inte bara förbättrar tillgängligheten för personer med hörselnedsättning utan erbjuder även pedagogiska och forskningsmässiga fördelar.
+
+Trots tillgängligheten av olika transkriberingstjänster, stöter många användare på utmaningar relaterade till kostnad, noggrannhet och tillgänglighet. Vårt projekt syftar till att tackla dessa utmaningar genom att utveckla en kostnadseffektiv, noggrann och lättillgänglig transkriberingstjänst för YouTube-videor.
 
 \subsection{Nomenklatur}
 JavaScript Object Notation (vidare känt som JSON).
 
 \section{Syfte}
-Syftet med YouTube Transcription Service är att erbjuda en enkel och automatiserad process för att generera texttranskriptioner av YouTube-videor.
+Syftet med YouTube Transcription Service är att erbjuda en automatiserad och användarvänlig tjänst som genererar texttranskriptioner av YouTube-videor till en textfil skickad till användarens email. Detta möjliggör ökad tillgänglighet och breddar användningsområdena för videoinnehåll.
 
 \section{Metod}
-Projektet implementerades genom en kombination av programmeringsspråken Go och Python,
-med användning av Apache Kafka för meddelandehantering, Apache ZooKeeper för namnhantering,
-MariaDB för datalagring och Docker för driftsättning.
+Plattformen bygger på en robust arkitektur där Apache Kafka hanterar köer av transkriptionsförfrågningar medan Apache ZooKeeper koordinerar konfigurationsdata. Go och Python används för att utveckla systemets bakgrundstjänster där OpenAI:s Whisper står för själva transkriberingsprocessen. Slutligen används MariaDB för att säkert lagra transkriptioner och användardata medan Docker underlättar driftsättningen av hela tjänsten på olika plattformar.
+
+YouTube Transcription Service önskar göra videomaterial mer tillgängligt och användbart. Genom att utnyttja skärningspunkten mellan avancerad AI och användarcentrerad design, bidrar projektet till att demokratisera tillgången till information.
