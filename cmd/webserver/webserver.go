@@ -37,7 +37,7 @@ func main() {
 
 	internal.Html(router)
 	internal.Auth(router)
-	internal.Api(router, producer)
+	internal.Api(router, producer, queries)
 	internal.Error(router)
 	router.Use(static.Serve("/", static.LocalFile("./web/static", true)))
 
