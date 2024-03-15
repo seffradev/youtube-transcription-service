@@ -1,0 +1,20 @@
+{{template "header.tmpl"}}
+
+<main class="container">
+    <!-- Transcription Submission Section -->
+    <section>
+        <h2>Transcribe YouTube Video</h2>
+        <p>Enter the URL of th YouTube video you want to transcribe.</p>
+
+        <!-- Transcription Form with ID for JavaScript event listener -->
+        <form id="transcription-form" class="auth-form" action="#" method="POST">
+            <label for="youtube-url">Youtube video URL:</label>
+            <!-- Input for the Youtube video URL -->
+            <input type="url" id="youtube-url" name="youtube-url" placeholder="https://www.youtube.com/watch?v=example" required>
+
+            <button type="submit">Transcribe Video</button>
+        </form>
+    </section>
+</main>
+
+{{template "footer.tmpl"}}
