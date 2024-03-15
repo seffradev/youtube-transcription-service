@@ -1,0 +1,9 @@
+version: 2
+sql:
+  - engine: mysql
+    queries: scripts/migrations/query.sql
+    schema: scripts/migrations/schema.sql
+    gen:
+      go:
+        package: internal
+        out: internal
