@@ -34,7 +34,7 @@ UPDATE
     transcription
 SET
     text = ?,
-    status = 'completed',
+    status = ?,
     completed_at = now()
 WHERE
     id = ?;
