@@ -60,6 +60,7 @@ services:
             dockerfile: build/transcription/Dockerfile
         environment:
             BOOTSTRAP_SERVERS: kafka:9092
+            DATABASE_URL: root:rootpassword@mariadb:3306/mydatabase
         volumes:
             - ../cmd/transcription:/app # Mount your Python app directory to the container
         depends_on:
