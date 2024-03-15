@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-<<<<<<< HEAD
     // Transcription Form Event Listener
     const transcriptionForm = document.getElementById('transcription-form');
     transcriptionForm.addEventListener('submit', function (event) {
@@ -103,8 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-=======
->>>>>>> parent of 9b7c125 (feat(frontend): create eventLitener for transcriptionForm)
     // Video Submission Form Event Listener
     const videoSubmissionForm = document.getElementById('video-submission-form');
     videoSubmissionForm.addEventListener('submit', function (event) {
