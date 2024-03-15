@@ -65,6 +65,35 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
+    // Transcription Form Event Listener
+    const transcriptionForm = document.getElementById('transcription-form');
+    transcriptionForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Extract the YouTube URL from the form
+        const youtubeUrl = transcriptionForm.elements['youtube-url'].value;
+
+        // Here, adapt the endpoint as necessary to fit your API design
+        fetch('/api/transcribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: youtubeUrl }),
+        })
+        .then(handleFetchResponse)
+        .then(data => {
+            // Handle success
+            displaySuccessMessage('Transciption in progress. You will be notified upon completion,', 'transcription-form');
+            // Maybe redirect the user or update the UI to indicate the transcription has started
+        })
+        .catch(error => {
+            // Handle error
+            console.error('There has been a problem with your fetch operation:', error);
+            displayErrorMessage(error.message, 'transcription-form');
+        });
+    });
+
     // Video Submission Form Event Listener
     const videoSubmissionForm = document.getElementById('video-submission-form');
     videoSubmissionForm.addEventListener('submit', function (event) {
