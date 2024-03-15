@@ -112,17 +112,18 @@ UPDATE
     transcription
 SET
     text = ?,
-    status = 'completed',
+    status = ?,
     completed_at = now()
 WHERE
     id = ?
 `
 
 type UpdateTranscriptionParams struct {
-	Text sql.NullString
-	ID   string
+	Text   sql.NullString
+	Status TranscriptionStatus
+	ID     string
 }
 
 func (q *Queries) UpdateTranscription(ctx context.Context, arg UpdateTranscriptionParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, updateTranscription, arg.Text, arg.ID)
+	return q.db.ExecContext(ctx, updateTranscription, arg.Text, arg.Status, arg.ID)
 }
