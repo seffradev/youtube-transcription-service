@@ -83,11 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(handleFetchResponse)
         .then(data => {
+            // Hide the loading spinner
+            document.getElementById('loading-spinner').style.display = 'none';
+
             // Handle success
             displaySuccessMessage('Transciption in progress. You will be notified upon completion,', 'transcription-form');
-            // Maybe redirect the user or update the UI to indicate the transcription has started
+            // Optionally update the UI or redirect user
         })
         .catch(error => {
+            // Hide the loading spinner
+            document.getElementById('loading-spinner').style.display = 'none';
+
             // Handle error
             console.error('There has been a problem with your fetch operation:', error);
             displayErrorMessage(error.message, 'transcription-form');
