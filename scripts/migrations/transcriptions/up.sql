@@ -4,5 +4,5 @@ CREATE TABLE transcription (
     text TEXT,
     requested_at DATETIME NOT NULL DEFAULT now(),
     completed_at DATETIME,
-    cost INT,
+    cost INT
 );
