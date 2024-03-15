@@ -1,14 +1,31 @@
 from confluent_kafka import Consumer, KafkaError, KafkaException, Producer
 from dotenv import load_dotenv
 from transcribe import download_video, transcribe, remove_video
+from sqlalchemy import create_engine, insert, Column, String, Integer, Text, DateTime, Enum
+from sqlalchemy.orm import Session, declarative_base
+from datetime import datetime
 import sys
 import os
 import logging
 
+Base = declarative_base()
+
 YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 running = True
 
-def process_message(consumer, url, status):
+class Transcription(Base):
+    __tablename__ = 'transcription'
+    id = Column(String(11), primary_key=True)
+    status = Column(Enum('pending', 'in_progress', 'completed', 'failed'), nullable=False)
+    text = Column(Text)
+    requested_at = Column(DateTime, nullable=False, default=datetime.now())
+    completed_at = Column(DateTime)
+    cost = Column(Integer)
+
+    def __repr__(self):
+        return "<Transcription(id='{}', status='{}', text='{}', requested_at='{}', completed_at='{}', cost='{}')>".format(self.id, self.status, self.text, self.requested_at, self.completed_at, self.cost)
+
+def process_message(database, consumer, url, status):
     logging.info("Received url: {}".format(url))
     logging.info("Received status: {}".format(status))
 
@@ -16,7 +33,7 @@ def process_message(consumer, url, status):
         filename = download_video([YOUTUBE_BASE_URL + url])
         transcription = transcribe(filename)
         remove_video(filename)
-        insert_transcription(url, transcription)
+        insert_transcription(database, url, transcription)
         return url, "done"
     except Exception as e:
         logging.error('Failed to process message: {}'.format(e))
@@ -24,7 +41,7 @@ def process_message(consumer, url, status):
     finally:
         consumer.commit(asynchronous=False)
 
-def consume_loop(consumer, producer_function):
+def consume_loop(database, consumer, producer_function):
     while running:
         msg = consumer.poll(timeout=1.0)
         if msg is None:
@@ -55,14 +72,14 @@ def consume_loop(consumer, producer_function):
                 consumer.commit(asynchronous=False)
                 continue
 
-            url, status = process_message(consumer, url, status)
+            url, status = process_message(database, consumer, url, status)
             producer_function(url, status)
 
-def consume(consumer, topics, producer_function):
+def consume(database, consumer, topics, producer_function):
     try:
         consumer.subscribe(topics)
         logging.info("Subscribed to topics: {}".format(topics))
-        consume_loop(consumer, producer_function)
+        consume_loop(database, consumer, producer_function)
     except KafkaException as e:
         logging.error('KafkaException: {}'.format(e))
         return 2
@@ -77,11 +94,17 @@ def consume(consumer, topics, producer_function):
 def produce(producer, topic, key, value):
     producer.produce(topic, key=key, value=value)
 
-def insert_transcription(url, transcription):
+def insert_transcription(database, url, transcription):
     logging.info("Inserting transcription for url: {}".format(url))
-    # Insert transcription into database
-    # Temporary log transcription to console for testing before database is setup
-    logging.info(transcription)
+    transcription_to_update = database.query(Transcription).filter(Transcription.id == url).one_or_none()
+    if transcription_to_update:
+        transcription_to_update.status = "completed"
+        transcription_to_update.text = transcription
+        transcription_to_update.completed_at = datetime.now()
+        database.commit()
+        logging.info("Updated transcription for url: {}".format(url))
+    else:
+        logging.error("Transcription not found for url: {}".format(url))
 
 def shutdown():
     global running
@@ -92,6 +115,17 @@ def main():
     logging.info("Starting transcription service")
     load_dotenv("configs/transcription/.env")
     bootstrap_servers = os.getenv("BOOTSTRAP_SERVERS")
+    database_url = os.getenv("DATABASE_URL")
+
+    if not bootstrap_servers:
+        logging.error("BOOTSTRAP_SERVERS not set")
+        sys.exit(1)
+
+    if not database_url:
+        logging.error("DATABASE_URL not set")
+        sys.exit(1)
+
+    database = create_engine("mysql+pymysql://" + database_url)
 
     conf = {
         'bootstrap.servers': bootstrap_servers,
@@ -117,7 +151,9 @@ def main():
         logging.error('Failed to create producer: {}'.format(e))
         sys.exit(2)
 
-    result = consume(consumer, topics, lambda key, value: produce(producer, "transcription", key, value))
+    with Session(database) as session:
+        result = consume(session, consumer, topics, lambda key, value: produce(producer, "transcription", key, value))
+
     producer.flush()
     sys.exit(result)
 
