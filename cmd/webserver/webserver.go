@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"yts/internal"
 
@@ -10,10 +11,17 @@ import (
 )
 
 func main() {
-	ip, port, bootstrapServers, err := internal.Environment()
+	ip, port, bootstrapServers, databaseUrl, err := internal.Environment()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+    db, err := sql.Open("mysql", databaseUrl)
+    if err != nil {
+        log.Fatal("Error connecting to database")
+    }
+
+    queries := internal.New(db)
 
 	producer, err := kafka.NewProducer(&kafka.ConfigMap{
 		"bootstrap.servers": bootstrapServers,
