@@ -84,6 +84,23 @@ XML (Extensible Markup Language): Ett flexibelt textformat för att organisera o
 Syftet med YouTube Transcription Service är att erbjuda en automatiserad och användarvänlig tjänst som genererar texttranskriptioner av YouTube-videor till en textfil skickad till användarens email. Detta möjliggör ökad tillgänglighet och breddar användningsområdena för videoinnehåll.
 
 \section{Metod}
-Plattformen bygger på en robust arkitektur där Apache Kafka hanterar köer av transkriptionsförfrågningar medan Apache ZooKeeper koordinerar konfigurationsdata. Go och Python används för att utveckla systemets bakgrundstjänster där OpenAI:s Whisper står för själva transkriberingsprocessen. Slutligen används MariaDB för att säkert lagra transkriptioner och användardata medan Docker underlättar driftsättningen av hela tjänsten på olika plattformar.
+Systemöversikt:
+Projektet "YouTube Transcription Service" syftar till att göra videomaterial mer tillgängligt genom att kombinera avancerad AI-teknologi med användarcentrerad design. Plattformen utnyttjar en robust arkitektur för att hantera transkriptionsprocessen från början till slut.
 
-YouTube Transcription Service önskar göra videomaterial mer tillgängligt och användbart. Genom att utnyttja skärningspunkten mellan avancerad AI och användarcentrerad design, bidrar projektet till att demokratisera tillgången till information.
+Klient-lager (Frontend):
+Användargränssnittet är utformat för att vara intuitivt och lättanvänt, möjliggörande för användare att enkelt ladda upp eller ange URL:er till YouTube-videor för transkribering. Gränssnittet är utvecklat med HTML, CSS och JavaScript för att säkerställa responsivitet och tillgänglighet över olika enheter och webbläsare.
+
+Server-lager (Backend):
+
+Applikationsserver: Bakgrundstjänsterna, utvecklade med Go och Python, hanterar logik för att ta emot och behandla transkriptionsförfrågningar. Systemet integrerar Apache Kafka för att hantera köer av transkriptionsförfrågningar, medan Apache ZooKeeper koordinerar konfigurationsdata. Detta säkerställer effektiv distribution och skalbarhet av tjänsten.
+Transkriberingsmotor: OpenAI:s Whisper används för att utföra själva transkriberingen av videor. Denna AI-drivna motor garanterar hög noggrannhet i transkriptionen, vilket är avgörande för tillgängligheten och användbarheten av det transkriberade innehållet.
+Databas-lager:
+MariaDB används för att säkert lagra användardata och de genererade transkriptionerna. Databasen är optimerad för att snabbt kunna hämta och lagra data, vilket underlättar en smidig användarupplevelse.
+
+Säkerhet och autentisering:
+Systemet implementerar grundläggande HTTP-autentisering för att säkerställa att endast auktoriserade användare kan skicka transkriptionsförfrågningar och få tillgång till sina resultat. Vidare används HTTPS för att kryptera all kommunikation mellan klienten och servern, skyddande användardata och transkriptioner från obehörig åtkomst.
+
+Utvecklingsmiljö och driftsättning:
+
+Utvecklingsverktyg: VSCode används som utvecklingsmiljö för dess omfattande stöd för både Go och Python, samt integrering med Git för versionshantering. GitHub tjänar som plattform för kodlagring och samarbete bland utvecklingsteamet.
+Driftsättning: Docker underlättar driftsättningen av hela tjänsten på olika plattformar, vilket möjliggör en enhetlig och isolerad miljö för applikationen. Detta bidrar till enklare underhåll, skalbarhet och portabilitet av systemet.
