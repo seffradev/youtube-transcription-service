@@ -26,12 +26,6 @@ ska transkriberas. I dessa meddelanden ingår även information om vem som
 begärde transkriberingen. Transkriberingskön är en separat komponent som drivs
 av Apache Kafka.
 
-\paragraph{E-postkö}
-E-postkön innehåller meddelanden med e-postadresser och transkriberingar som
-ska skickas till dessa adresser. Används för att se till att alla användare
-får de transkriberingar de begär om systemet är överbelastat eller kraschar.
-E-postkön är en separat komponent som drivs av Apache Kafka.
-
 \paragraph{Transkriberingsmotor}
 Transkriberingsmotorn ska vara en separat komponent som hämtar från
 transkriberingskön. Efter hämtat meddelande från kön ska motorn hämta videon
@@ -41,13 +35,6 @@ transkriberingen är klar. Sist ska motorn radera videon från disk för att
 frigöra utrymme. Transkriberingsmotorn implementeras i programmeringsspråket
 Python med hjälp av OpenAI:s Whisper. För flödesdiagram, se Figur
 \ref{fig:transcription-flowchart}.
-
-\paragraph{E-posttjänst}
-E-posttjänsten ska vara en separat komponent som hämtar från e-postkön. Efter
-hämtat meddelande från kön ska tjänsten skicka e-post till adressen med
-transkriberingen som en bifogad fil. E-posttjänsten implementeras i
-programmeringsspråket Go. För flödesdiagram, se Figur
-\ref{fig:email-flowchart}.
 
 \paragraph{Webbapplikation}
 Webbapplikationen ska vara en separat komponent som tillåter användare att
@@ -93,26 +80,3 @@ Kafka, MariaDB och Apache ZooKeeper samt en lastbalanserare och en proxy för
 att öka webbapplikationens kapacitet. Byggs systemet enligt en sådan modell
 används arkitekturtermen ''microservices'' och ger horisontell skalbarhet samt
 ökad feltolerans. 
-
-\subsection{Användningsfall}
-
-\subsubsection{Skapa konto}
-Jag som användare vill kunna skapa ett konto för att kunna begära
-transkriberingar till YouTube-videor.
-
-\subsubsection{Logga in}
-Jag som användare vill kunna logga in för att kunna begära transkriberingar
-till YouTube-videor.
-
-\subsubsection{Skapa transkribering}
-Jag som användare vill kunna skapa en transkribering genom att mata in en URL
-till en YouTube-video för att få innehållet i videon utan att behöva kolla på
-den.
-
-\subsubsection{Hämta transkribering}
-Jag som användare vill kunna hämta en transkribering genom att mata in en URL
-till en YouTube-video för att få innehållet i videon utan att behöva kolla på
-den.
-
-\subsection{Tidsplan}
-Se Figur \ref{fig:gantt}.

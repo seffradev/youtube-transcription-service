@@ -32,7 +32,7 @@ presenteras här en kort förklaring av de termer som används i rapporten:
     hypertextdokument.
     \item Hypertext Transfer Protocol Secure (HTTPS): En säker version av HTTP
     som använder kryptering för att skydda dataöverföring.
-    \item Basic HTTP Authentication: En enkel autentiseringsmekanism inom
+    \item HTTP Basic Authentication: En enkel autentiseringsmekanism inom
     HTTP-protokollet.
     \item Structured Query Language (SQL): Ett språk som används för att
     hantera och manipulera relationsdatabaser.
@@ -46,8 +46,8 @@ presenteras här en kort förklaring av de termer som används i rapporten:
     presentera ett dokument skrivet i HTML eller XML.
     \item Application Programming Interface (API): En uppsättning definitioner
     och protokoll för att bygga och integrera applikationsprogramvara.
-    \item Representational State Transfer (REST): En arkitektonisk stil för
-    att designa nätverksbaserade applikationer.
+    \item Representational State Transfer (REST eller RESTful): En
+    arkitektonisk stil för att designa nätverksbaserade applikationer.
     \item RESTful API: Ett API som använder HTTP-protokollet och REST-principer
     för att skapa, läsa, uppdatera och ta bort data över webben. RESTful APIs
     är designade för att vara lättanvända och flexibla, vilket gör dem populära
@@ -62,10 +62,22 @@ presenteras här en kort förklaring av de termer som används i rapporten:
 \section{Syfte}
 Syftet med YouTube Transcription Service är att erbjuda en automatiserad och
 användarvänlig tjänst som genererar texttranskriptioner av YouTube-videor till
-en textfil skickad till användarens email. Detta möjliggör ökad tillgänglighet
-och breddar användningsområdena för videoinnehåll.
+en åtkomlighet via samma webbsida. 
 
 \section{Metod}
+
+Plattformen bygger på en robust arkitektur där Apache Kafka hanterar köer av
+transkriptionsförfrågningar medan Apache ZooKeeper koordinerar
+konfigurationsdata. Go och Python används för att utveckla systemets
+bakgrundstjänster där OpenAI:s Whisper står för själva
+transkriberingsprocessen. Slutligen används MariaDB för att säkert lagra
+transkriptioner och användardata medan Docker underlättar driftsättningen av
+hela tjänsten på olika plattformar.
+
+YouTube Transcription Service önskar göra videomaterial mer tillgängligt och
+användbart. Genom att utnyttja skärningspunkten mellan avancerad AI och
+användarcentrerad design, bidrar projektet till att demokratisera tillgången
+till information.
 
 \subsection{Systemöversikt}
 Projektet syftar till att göra videomaterial mer tillgängligt genom att
@@ -89,20 +101,22 @@ automatiserade system som ämnar utöka funktionaliteten.
 \subsection{Server-lager}
 
 \subsubsection{Applikationsserver}
-Bakgrundstjänsterna, utvecklade med Go och Python,
-hanterar logik för att ta emot och behandla transkriptionsförfrågningar.
-Systemet integrerar Apache Kafka för att hantera köer av
-transkriptionsförfrågningar, medan Apache ZooKeeper koordinerar
-konfigurationsdata. Detta säkerställer effektiv distribution och skalbarhet av
-tjänsten.
-\subsubsection{Transkriberingsmotor} OpenAI:s Whisper används för att utföra själva
-transkriberingen av videor. Denna AI-drivna motor garanterar hög noggrannhet i
-transkriptionen, vilket är avgörande för tillgängligheten och användbarheten
-av det transkriberade innehållet.
-\subsubsection{Databas-lager}
-MariaDB används för att säkert lagra användardata och de genererade
-transkriptionerna. Databasen är optimerad för att snabbt kunna hämta och
-lagra data, vilket underlättar en smidig användarupplevelse.
+Bakgrundstjänsterna, utvecklade med Go och Python, hanterar logik för att ta
+emot och behandla transkriptionsförfrågningar. Systemet integrerar Apache
+Kafka för att hantera köer av transkriptionsförfrågningar, medan Apache
+ZooKeeper koordinerar konfigurationsdata. Detta säkerställer effektiv
+distribution och skalbarhet av tjänsten.
+
+\subsubsection{Transkriberingsmotor}
+OpenAI:s Whisper används för att utföra själva transkriberingen av videor.
+Denna AI-drivna motor garanterar hög noggrannhet i transkriptionen, vilket är
+avgörande för tillgängligheten och användbarheten av det transkriberade
+innehållet.
+
+\subsubsection{Databaslager}
+MySQL används för att säkert lagra användardata och de genererade
+transkriptionerna. Databasen är optimerad för att snabbt kunna hämta och lagra
+data, vilket underlättar en smidig användarupplevelse.
 
 \subsubsection{Säkerhet och autentisering}
 Systemet implementerar grundläggande HTTP-autentisering för att säkerställa
@@ -111,29 +125,33 @@ få tillgång till sina resultat. Vidare används HTTPS för att kryptera all
 kommunikation mellan klienten och servern, skyddande användardata och
 transkriptioner från obehörig åtkomst.
 
-\subsection{Utvecklingsmiljö och driftsättning}
-
-\subsubsection{Utvecklingsverktyg}
-VSCode används som utvecklingsmiljö för dess omfattande
-stöd för både Go och Python, samt integrering med Git för versionshantering.
-GitHub tjänar som plattform för kodlagring och samarbete bland
-utvecklingsteamet.
-
-\subsubsection{Driftsättning}
+\subsection{Driftsättning}
 Docker underlättar driftsättningen av hela tjänsten på olika
 plattformar, vilket möjliggör en enhetlig och isolerad miljö för
 applikationen. Detta bidrar till enklare underhåll, skalbarhet och
 portabilitet av systemet.
 
-Plattformen bygger på en robust arkitektur där Apache Kafka hanterar köer av
-transkriptionsförfrågningar medan Apache ZooKeeper koordinerar
-konfigurationsdata. Go och Python används för att utveckla systemets
-bakgrundstjänster där OpenAI:s Whisper står för själva
-transkriberingsprocessen. Slutligen används MariaDB för att säkert lagra
-transkriptioner och användardata medan Docker underlättar driftsättningen av
-hela tjänsten på olika plattformar.
+\section{Kravspecifikation}
 
-YouTube Transcription Service önskar göra videomaterial mer tillgängligt och
-användbart. Genom att utnyttja skärningspunkten mellan avancerad AI och
-användarcentrerad design, bidrar projektet till att demokratisera tillgången
-till information.
+\subsection{Användningsfall}
+
+\subsubsection{Skapa konto}
+Jag som användare vill kunna skapa ett konto för att kunna begära
+transkriberingar till YouTube-videor.
+
+\subsubsection{Logga in}
+Jag som användare vill kunna logga in för att kunna begära transkriberingar
+till YouTube-videor.
+
+\subsubsection{Skapa transkribering}
+Jag som användare vill kunna skapa en transkribering genom att mata in en URL
+till en YouTube-video för att få innehållet i videon utan att behöva kolla på
+den.
+
+\subsubsection{Hämta transkribering}
+Jag som användare vill kunna hämta en transkribering genom att mata in en URL
+till en YouTube-video för att få innehållet i videon utan att behöva kolla på
+den.
+
+\subsection{Tidsplan}
+Se Figur \ref{fig:gantt}.
