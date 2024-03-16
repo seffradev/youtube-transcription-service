@@ -13,7 +13,7 @@ import (
 func main() {
 	ip, port, bootstrapServers, databaseUrl, err := internal.Environment()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 
     db, err := sql.Open("mysql", databaseUrl)
