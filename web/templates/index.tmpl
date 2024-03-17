@@ -1,6 +1,22 @@
 {{template "header.tmpl"}}
-<section>
-    <p>Welcome to the Youtube Transcription Service.
-        Here you can...</p>
-</section>
+
+<main class="container">
+    <!-- Transcription Submission Section -->
+    <section>
+        <h2>Transcribe YouTube Video</h2>
+        <p>Enter the URL of th YouTube video you want to transcribe.</p>
+
+        <!-- Transcription Form with ID for JavaScript event listener -->
+        <form id="transcription-form" class="auth-form" action="#" method="POST">
+            <label for="youtube-url">Youtube video URL:</label>
+            <!-- Input for the Youtube video URL -->
+            <input type="url" id="youtube-url" name="youtube-url" placeholder="https://www.youtube.com/watch?v=example" required>
+
+            <button type="submit">Transcribe Video</button>
+        </form>
+        <!-- Loading spinner added below the form -->
+        <div id="loading-spinner" class="loader" style="display:none;"></div>
+    </section>
+</main>
+
 {{template "footer.tmpl"}}
