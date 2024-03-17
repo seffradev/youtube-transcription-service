@@ -35,7 +35,7 @@ func main() {
 
 	router := gin.Default()
 
-	internal.Html(router)
+	internal.Html(router, queries)
 	internal.Auth(router)
 	internal.Api(router, producer, queries)
 	internal.Error(router)

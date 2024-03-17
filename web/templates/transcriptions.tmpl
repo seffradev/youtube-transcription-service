@@ -1,0 +1,13 @@
+{{template "header.tmpl"}}
+
+<main class="container">
+    <section>
+        <h1>{{.transcription.ID}}</h1>
+        <p>{{.transcription.Status}}</p>
+        <p>{{.transcription.Text}}</p>
+        <p>{{.transcription.RequestedAt}}</p>
+        <p>{{.transcription.CompletedAt}}</p>
+    </section>
+</main>
+
+{{template "footer.tmpl"}}
