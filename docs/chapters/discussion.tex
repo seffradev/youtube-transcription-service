@@ -1,34 +1,84 @@
 \chapter{Diskussion}
-I en reflektion över de tekniska framstegen inom AI och transkriberingsteknik, är
-det viktigt att erkänna begränsningarna av dessa system när det kommer till
-tolkningen av kroppsspråk. Trots att AI-baserade transkriberingsverktyg som
-OpenAI:s Whisper kan uppnå hög noggrannhet i att identifiera och omvandla
-talat ord till text[källa krävs], finns det en dimension av mänsklig kommunikation som
-fortfarande utmanar dagens teknologi: kroppsspråket.
 
-Kroppsspråket, som inkluderar gester, ansiktsuttryck, och tonfall, spelar en
-kritisk roll i hur budskap uppfattas och förstås av mottagaren. Denna
-icke-verbala kommunikation kan bära en mängd information som kompletterar,
-förstärker eller till och med motsäger det som sägs verbalt. Detta innebär att
-även den mest noggranna texttranskriptionen kan missa nyanser och betoningar
-som förmedlas genom kroppsspråk.
+\section{Analys}
+För att säkerställa att transkriberingar sker i rätt ordning, så läggs en
+transkriberingsförfrågan i en kö och läggs upp i databasen med status
+''pending''. Den tas sedan upp av en transkriberingstjänst och när den är
+klar, så uppdateras statusen till ''completed''. Om en transkribering är
+markerad med en status som inte är ''pending'', exempelvis ''completed'' eller
+''in progress'', så kommer inte en annan transkriberingstjänst att processa
+den. Om en transkribering är markerad med status ''failed'' kan den återupptas
+om den efterfrågas igen via webbapplikationen.
 
-\section{Tekniska och mänskliga utmaningar}
-Denna begränsning leder till en viktig diskussion om balansen mellan tekniska
-lösningar och mänsklig tolkning. Även om teknologin fortsätter att utvecklas
-och blir allt mer sofistikerad, finns det en värdefull aspekt av mänsklig
-förståelse och tolkning som inte lätt kan replikeras av maskiner. Det ställer
-frågor om hur vi bäst kan använda teknologin som ett verktyg för att
-komplettera mänsklig förmåga snarare än att ersätta den.
+Utan hanteringen på detta sätt skulle det kunna uppstå problem med att flera
+transkriberingstjänster försöker transkribera samma video samtidigt. Det
+skulle kunna leda till att samma video transkriberas flera gånger, vilket
+kostar resurser. Statusarna skyddar även mot att en transkribering görs om
+då en transkriberingsnod kraschar och går över listan över
+transkriberingsförfrågningar.
+
+Klienterna får en sammanställd bild via den gemensamma databasen som sköts av
+transkriberingstjänsten och webbapplikationen. Där lagras alla
+transkriberingar och klienter kan se alla transkriberingar som är gjorda av
+andra klienter. Noderna i systemet är oberoende av varandra
+och kan köras på olika maskiner, med en stark särkoppling från allt utom
+databas och meddelandekön. Det gör att den verklighetsförankring noderna
+kräver ställs på MySQL och Apache Kafka.
+
+Då systemet hanterar meddelanden och händelser är det lätt att misstänka att
+det handlar om eventuell konsekvens i systemet, men det är inte fallet. 
+Eftersom klienterna inte får olika svar beroende på vilken nod som svarar, så
+är det inte en inkonsekvens i systemet. När en transkibering är klar så
+uppdateras statusen i databasen och alla klienter får därav den nya statusen
+lika snabbt som om den hade fått svaret direkt från transkriberingstjänsten.
+
+Om en nod kraschar så kommer den att startas om av Docker Compose. Detta
+sker automatiskt och är en del av konfigurationen i Docker Compose. Beroende
+på vilken nod som kraschar så har det olika stora inverkningar på systemet.
+Om webbapplikationen kraschar så kommer klienter inte kunna använda förfråga
+transkriberingar. Om transkriberingstjänsten kraschar så kommer inga 
+transkriberingar att bli gjorda. Om databasen kraschar så kommer inga
+transkriberingar att kunna lagras eller hämtas. Om Apache Kafka kraschar så
+kommer inga meddelanden att kunna skickas eller tas emot. För allmändriften
+av systemet så är det viktigt att Apache Kafka och databasen är tillgängliga,
+medan webbapplikationen och transkriberingstjänsten startar om sig själva. 
+Webbapplikationen kan fortsätta skicka meddelanden till Apache Kafka så 
+transkriberingstjänsten kan fortsätta att transkribera när den startat om.
+
+\section{Projektarbetet}
+Projektet valdes att skala upp i svårighetsgrad utöver en trelagersarkitektur
+och en enkel webbapplikation. Detta gjordes för att utmana oss själva och
+få en djupare förståelse för hur många moderna system kan se ut. Detta
+innebar att vi behövde lära oss att använda Apache Kafka, Apache Zookeeper,
+Docker Compose och Confluents [källa krävs] bibliotek i Go och Python för
+kommunikation med Apache Kafka. Utöver det valde vi att använda ett
+programmeringsspråk som vi inte hade använt tidigare, nämligen Go. Det ledde
+till mycket läsning och förberedelse innan projektet tog fart. 
+
+Utöver språk och teknologivalen så använde vi GitHub flitigt för att
+hantera kod och dokumentation. Vi använde även GitHub Actions för att
+automatisera generation av denna rapport, författad i \LaTeX. Pull requests
+och code reviews användes för att säkerställa kvaliteten på koden och issues
+användes för att hantera uppgifter, buggar och ansvarsområden.
+
+I mån av tid har Figur \ref{fig:transcription-flowchart} och Figur 
+\ref{fig:system-flowchart} inte fått med de potentiella fel som kan uppstå
+i systemet. 
 
 \section{Vidare arbeten}
 Utöver att utforska möjligheter för att förbättra teknikens förmåga att tolka
 kroppsspråk, finns det andra potentiella områden för vidareutveckling av
 systemet:
 
-\subsection{Direkta tekniska möjligheter}
+\subsection{Caching}
+För att förbättra prestanda och användarupplevelse, skulle det vara möjligt
+att implementera en cache för att lagra transkriptioner som redan har gjorts.
+Detta skulle minska belastningen på systemet och förbättra svarstiden för
+användare. Enbart om användarantalet är stort och man ser ett mönster i
+efterfrågade transkriptioner skulle detta vara en relevant förbättring. 
+Exempelvis med en Redis-databas. 
 
-\subsubsection{Sammanfattning och analys}
+\subsection{Sammanfattning och analys}
 Att integrera en sammanfattning och analys av transkriptioner skulle kunna
 öka systemets användbarhet och värde för användare. Detta skulle kunna
 innefatta en sammanfattning av de viktigaste punkterna i transkriptionen, en
@@ -36,16 +86,16 @@ analys av tonfall och känslomässiga nyanser. Detta skulle kunna vara särskilt
 användbart för forskare och journalister som behöver snabbt få en överblick av
 en videos innehåll.
 
-\subsubsection{Segmenterad transkribering}
+\subsection{Segmenterad transkribering}
 Ett förslag är att möjliggöra för användare att
 välja specifika delar av en video för transkribering genom att ange ett
 tidsintervall. Detta skulle inte bara göra systemet mer flexibelt utan också
 mer kostnadseffektivt och tidsbesparande för användaren.
 
-\subsection{Flera format för transkriptioner}
+\section{Flera format för transkriptioner}
 Att erbjuda transkriptioner i olika format
-som JSON, XML, Markdown, LaTeX, och punktform skulle kunna tillgodose de
-varierande behoven hos olika användargrupper. Forskare kan föredra LaTeX för
+som JSON, XML, Markdown, \LaTeX, och punktform skulle kunna tillgodose de
+varierande behoven hos olika användargrupper. Forskare kan föredra \LaTeX för
 akademiska publikationer, medan utvecklare kan föredra JSON eller XML för
 datamanipulation. Att inkludera funktionen för översättning till andra språk skulle ytterligare utöka systemets användbarhet och tillgänglighet. Detta skulle möjliggöra för en ännu bredare användargrupp att dra nytta av tjänsten vilket ytterligare stärker systemets roll i att demokratisera tillgången till information.
 
@@ -53,7 +103,7 @@ Dessa tillägg skulle inte bara utöka systemets användbarhet utan också dess
 tillgänglighet, vilket stärker dess roll i att demokratisera
 informationstillgång.
 
-\subsubsection{Autentisering och säkerhet}
+\subsection{Autentisering och säkerhet}
 I dagsläget är systemet öppet för alla att använda utan möjlighet till
 att autentisera ett privat konto. Detta innebär att användare inte kan spara
 egna transkriptioner och att alla transkriptioner är publika. Detta skulle
@@ -70,7 +120,7 @@ transkriptioner och användarinformation. Detta skulle kunna innefatta
 kryptering av transkriptioner, en tydligare integritetspolicy och möjligheten
 för användare att radera sina transkriptioner från systemet.
 
-\subsubsection{Monetärisering}
+\subsection{Monetärisering}
 Då systemet nyttjar AI-modeller och andra resurser, skulle det kunna vara
 möjligt att överväga monetärisering av systemet för att täcka kostnader för
 drift och underhåll. Detta skulle kunna innefatta en prenumerationsmodell för
@@ -89,14 +139,36 @@ Det uppmuntrar användare att transkribera videor för andra användare och
 skapar en mer rättvis modell för användare som transkriberar fler videor än de
 själva begär.
 
-\subsection{Långsiktiga vidareutvecklingar}
+\section{Tekniska och mänskliga utmaningar}
+I en reflektion över de tekniska framstegen inom AI och transkriberingsteknik,
+är det viktigt att erkänna begränsningarna av dessa system när det kommer till
+tolkningen av kroppsspråk. Trots att AI-baserade transkriberingsverktyg som
+OpenAI:s Whisper kan uppnå hög noggrannhet i att identifiera och omvandla
+talat ord till text[källa krävs], finns det en dimension av mänsklig
+kommunikation som fortfarande utmanar dagens teknologi: kroppsspråket.
 
-\subsubsection{Tekniska och mänskliga utmaningar}
+Kroppsspråket, som inkluderar gester, ansiktsuttryck, och tonfall, spelar en
+kritisk roll i hur budskap uppfattas och förstås av mottagaren. Denna
+icke-verbala kommunikation kan bära en mängd information som kompletterar,
+förstärker eller till och med motsäger det som sägs verbalt. Detta innebär att
+även den mest noggranna texttranskriptionen kan missa nyanser och betoningar
+som förmedlas genom kroppsspråk.
+
+Denna begränsning leder till en viktig diskussion om balansen mellan tekniska
+lösningar och mänsklig tolkning. Även om teknologin fortsätter att utvecklas
+och blir allt mer sofistikerad, finns det en värdefull aspekt av mänsklig
+förståelse och tolkning som inte lätt kan replikeras av maskiner. Det ställer
+frågor om hur vi bäst kan använda teknologin som ett verktyg för att
+komplettera mänsklig förmåga snarare än att ersätta den.
+
 Att integrera kroppsspråk i transkriptionen representerar en betydande teknisk
 utmaning men öppnar också upp för diskussioner om framtida innovationer inom
 AI och maskininlärning. Utvecklingen av algoritmer som kan identifiera och
 tolka kroppsspråk skulle kunna revolutionera hur vi interagerar med AI-system
 och öka deras förmåga att förstå mänskliga nyanser i kommunikation.
 
-\subsection{Sociala och etiska överväganden}
-När dessa nya territorier utforskas, måste också medvetenhet kring de sociala och etiska implikationerna upprätthållas, särskilt vad gäller integritet och kulturella skillnader i kroppsspråk. Att dessa teknologier utvecklas på ett sätt som respekterar användarnas integritet och kulturella mångfald blir avgörande.
+När dessa nya territorier utforskas, måste också medvetenhet kring de sociala
+och etiska implikationerna upprätthållas, särskilt vad gäller integritet och
+kulturella skillnader i kroppsspråk. Att dessa teknologier utvecklas på ett
+sätt som respekterar användarnas integritet och kulturella mångfald blir
+avgörande.
