@@ -40,35 +40,41 @@ transkribering av YouTube-videor till text.
 För att underlätta förståelsen av projektet och dess tekniska aspekter
 presenteras här en kort förklaring av de termer som används i rapporten:
 \begin{itemize}
-    \item \textbf{Hypertext Transfer Protocol (HTTP)}: Ett protokoll för överföring av
-    hypertextdokument.
-    \item \textbf{Hypertext Transfer Protocol Secure (HTTPS)}: En säker version av HTTP
-    som använder kryptering för att skydda dataöverföring.
-    \item \textbf{HTTP Basic Authentication}: En enkel autentiseringsmekanism inom
-    HTTP-protokollet.
-    \item \textbf{Structured Query Language (SQL)}: Ett språk som används för att
-    hantera och manipulera relationsdatabaser.
-    \item \textbf{Hypertext Markup Language (HTML)}: Standardspråket för att skapa och
-    strukturera sektioner på en webbsida.
-    \item \textbf{eXtensible Markup Language (XML)}: Ett flexibelt textformat för att
-    organisera och transportera data
-    \item \textbf{JavaScript Object Notation (JSON)}: Ett lättviktigt datautbytesformat
-    som är lätt för människor att läsa och skriva.
-    \item \textbf{Cascading Style Sheets (CSS)}: Stilspråket som används för att
-    presentera ett dokument skrivet i HTML eller XML.
-    \item \textbf{Application Programming Interface (API)}: En uppsättning definitioner
-    och protokoll för att bygga och integrera applikationsprogramvara.
+    \item \textbf{Hypertext Transfer Protocol (HTTP)}: Ett protokoll för
+    överföring av hypertextdokument \cite{RFC7231}.
+    \item \textbf{Hypertext Transfer Protocol Secure (HTTPS)}: En säker
+    version av HTTP som använder kryptering för att skydda dataöverföring
+    \cite{RFC2818}.
+    \item \textbf{HTTP Basic Authentication}: En enkel autentiseringsmekanism
+    inom HTTP-protokollet \cite{RFC7617}.
+    \item \textbf{Structured Query Language (SQL)}: Ett språk som används för
+    att hantera och manipulera relationsdatabaser.
+    \item \textbf{Hypertext Markup Language (HTML)}: Standardspråket för att
+    skapa och strukturera sektioner på en webbsida.
+    \item \textbf{eXtensible Markup Language (XML)}: Ett flexibelt textformat
+    för att organisera och transportera data
+    \item \textbf{JavaScript Object Notation (JSON)}: Ett lättviktigt
+    datautbytesformat som är lätt för människor att läsa och skriva.
+    \item \textbf{Cascading Style Sheets (CSS)}: Stilspråket som används för
+    att presentera ett dokument skrivet i HTML eller XML.
+    \item \textbf{Application Programming Interface (API)}: En uppsättning
+    definitioner och protokoll för att bygga och integrera
+    applikationsprogramvara.
     \item \textbf{Representational State Transfer (REST eller RESTful)}: En
     arkitektonisk stil för att designa nätverksbaserade applikationer.
-    \item \textbf{RESTful API}: Ett API som använder HTTP-protokollet och REST-principer
-    för att skapa, läsa, uppdatera och ta bort data över webben. RESTful APIs
-    är designade för att vara lättanvända och flexibla, vilket gör dem populära
-    för webbapplikationsutveckling.
-    \item \textbf{Artificiell Intelligens (AI)}: Teknik som syftar till att skapa
-    maskiner som kan utföra uppgifter som vanligtvis kräver mänsklig
+    \item \textbf{RESTful API}: Ett API som använder HTTP-protokollet och
+    REST-principer för att skapa, läsa, uppdatera och ta bort data över
+    webben. RESTful APIs är designade för att vara lättanvända och flexibla,
+    vilket gör dem populära för webbapplikationsutveckling.
+    \item \textbf{Artificiell Intelligens (AI)}: Teknik som syftar till att
+    skapa maskiner som kan utföra uppgifter som vanligtvis kräver mänsklig
     intelligens.
     \item \textbf{OpenAI Whisper}: En AI-baserad transkriberingsteknik från
     OpenAI.
+    \item \textbf{Apache Kafka}: En distribuerad strömhanteringsplattform som
+    används för att bygga realtidsdataflöden och realtidsapplikationer.
+    \item \textbf{Kafka Topic}: En kategori eller flöde av meddelanden i
+    Kafka.
 \end{itemize}
 
 \section{Metod och kravställning}
@@ -84,7 +90,7 @@ Projektet har identifierat följande krav för att uppnå syftet:
     gränssnitt för automatiserade system.
     \item \textbf{Skalbarhet}: Plattformen ska vara skalbar för att hantera
     det krav som ställs då användning av AI-verktyg kan vara resurskrävande
-    [källa krävs].
+    \cite{GreenSoftwareFoundation2024CanAITrulyBeGreen}.
     \item \textbf{Noggrannhet}: Plattformen ska erbjuda en inställning för att
     välja noggrannhetsnivå för transkribering för bekostnad av tid.
     \item \textbf{Persistering}: Plattformen ska spara transkriberingar för

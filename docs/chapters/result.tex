@@ -5,10 +5,10 @@
 \label{sec:general-system-description}
 Det färdiga systemet är en webbapplikation som tillåter användare att
 transkribera YouTube-videor. Användare kan autentisera sig med ett hårdkodat
-användarnamn och lösenord via HTTP Basic Authentication [källa krävs]. Efter
+användarnamn och lösenord via HTTP Basic Authentication \cite{RFC7617}. Efter
 autentisering får användaren utrymme att begära transkriberingar. Varje
-transkribering skickas till en kö som hanteras av Apache Kafka [källa krävs].
-En separat komponent, transkriberingsmotorn, hämtar
+transkribering skickas till en kö som hanteras av Apache Kafka
+\cite{ApacheKafka}. En separat komponent, transkriberingsmotorn, hämtar
 transkriberingsförfrågningar från kön och transkriberar videorna med hjälp av
 OpenAI:s Whisper \cite{OpenAIWhisper}. När transkriberingen är klar finns den
 tillgänglig för användaren att hämta via webbapplikationen.
@@ -28,18 +28,18 @@ tillgänglig för användaren att hämta via webbapplikationen.
 Transkriberingskön innehåller meddelanden med URL:er till YouTube-videor som
 ska transkriberas. I dessa meddelanden ingår även information om vem som
 begärde transkriberingen. Transkriberingskön är en separat komponent som drivs
-av Apache Kafka [källa krävs].
+av Apache Kafka \cite{ApacheKafka}.
 
 \subsection{Transkriberingsmotor}
 \label{sec:transcription-engine}
-Transkriberingsmotorn är en separat komponent implementerad i Python [källa
-krävs] som hämtar meddelanden från transkriberingskön. Varje meddelande
-innehåller ett ID som relaterar till en YouTube-video. Transkriberingsmotorn
-hämtar videor från YouTube och transkriberar dem med hjälp av OpenAI:s Whisper
-med inställning \verb|small| \cite{OpenAIWhisper}. När transkriberingen är
-klar läggs den till i databasen och videofilen raderas från disk.
-Flödesdiagram för hur tjänsten arbetar är enligt Figur
-\ref{fig:transcription-flowchart}. 
+Transkriberingsmotorn är en separat komponent implementerad i Python
+\cite{PythonSoftwareFoundation2024} som hämtar meddelanden från
+transkriberingskön. Varje meddelande innehåller ett ID som relaterar till en
+YouTube-video. Transkriberingsmotorn hämtar videor från YouTube och
+transkriberar dem med hjälp av OpenAI:s Whisper med inställning \verb|small|
+\cite{OpenAIWhisper}. När transkriberingen är klar läggs den till i databasen
+och videofilen raderas från disk. Flödesdiagram för hur tjänsten arbetar är
+enligt Figur \ref{fig:transcription-flowchart}. 
 
 \subsection{Webbapplikation}
 \label{sec:web-application}
@@ -60,19 +60,19 @@ och begära transkriberingar.
 \label{sec:database}
 Databasen är en separat nod som lagrar transkriberingar. Databasen är en
 instans av den relationella databasen MySQL och driftas på Lightsail på Amazon
-Web Services [källa krävs].
+Web Services \cite{AmazonWebServices2024Lightsail}.
 
 \section{Kommunikation}
 \label{sec:communication}
 Namnhantering för tjänsterna sköts via Apache ZooKeeper och
-Docker Compose som har en inbyggd DNS-översättning [källa krävs, 1, 2].
-Tjänsterna kommunicerar med varandra via HTTP och Kafka Topics.
-Webbapplikationen är en producent till transkriberingskön, medan
-transkriberingsmotorn är en konsument. 
+Docker Compose som har en inbyggd DNS-översättning \cite{ApacheZooKeeper,
+DockerNetworkingDocumentation2024}. Tjänsterna kommunicerar med varandra via
+HTTP och Kafka Topics. Webbapplikationen är en producent till
+transkriberingskön, medan transkriberingsmotorn är en konsument. 
 
 \section{Säkerhet}
 \label{sec:security}
-Systemet bygger på HTTP Basic Authentication [källa krävs] för att autentisera
+Systemet bygger på HTTP Basic Authentication \cite{RFC7617} för att autentisera
 användare. Autentiseringen är hårdkodad till användarnamnet \verb|foo| och
 lösenordet \verb|bar|. Kommunikationen mellan klienten och servern är
 krypterad med HTTPS via Cloudflare.
@@ -85,5 +85,5 @@ att lägga till fler instanser av transkriberingsmotorn, webbapplikationen,
 Apache Kafka, MariaDB och Apache ZooKeeper för att öka kapaciteten. Det är
 också möjligt att lägga till en lastbalanserare och en proxy för att dela upp
 trafiken till flera instanser av webbapplikationen. Systemet är byggt enligt
-arkitekturtermen ''microservices'' [källa krävs] och ger horisontell
-skalbarhet samt ökad feltolerans.
+arkitekturtermen ''microservices'' \cite{MicroservicesIO2024} och ger
+horisontell skalbarhet samt feltolerans.
