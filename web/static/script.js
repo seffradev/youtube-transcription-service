@@ -62,12 +62,7 @@ function fetchTranscriptionDetails(transcriptionId) {
 
 // Function to handle transcription request submission
 function handleTranscriptionRequest(videoId) {
-    fetch(`/api/transcribe/${videoId}`, {
-        method: 'POST', // or 'GET' if that's what your API requires
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
+    fetch(`/api/transcribe/${videoId}`)
     .then(handleFetchResponse)
     .then(data => {
         displaySuccessMessage('Transcription in progress. You will be notified upon completion.', 'transcription-form');
