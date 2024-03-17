@@ -1,9 +1,11 @@
 \chapter{Introduktion}
+\label{ch:introduction}
 
 \section{Bakgrund}
-Med mängden användare av digitalt videomaterial på plattformar som YouTube har
-behovet av tillgängliga textversioner blivit alltmer angeläget. Denna
-utveckling reflekteras i akademiska studier som betonar vikten av
+\label{sec:background}
+Med mängden användare av digitalt videomaterial på plattformar som YouTube och
+Twitch, har behovet av tillgängliga textversioner blivit alltmer angeläget.
+Denna utveckling reflekteras i akademiska studier som betonar vikten av
 transkribering inom forskning, där det möjliggör en mer djupgående analys av
 material och en förbättrad tillgänglighet för olika användargrupper
 \cite{RevBlog2019}. Transkriberingens roll inom akademisk forskning
@@ -22,136 +24,114 @@ kan spela en kritisk roll i att förbättra tillgången på forskningsdata och
 stödja forskare i deras arbete, vilket ytterligare bekräftas av Happy Scribe
 som framhäver transkriberingens värde i specialutbildningsforskning och hur
 det kan förbättra förståelsen för komplexa termer och terminologi
-\cite{HappyScribeND}.
+\cite{HappyScribeND}. En transkriberingstjänst för YouTube-videor kan också
+vara till nytta för personer med hörselnedsättning, vilket kan förbättra deras
+tillgång till digitalt videomaterial. Sist så kan gemene man ha nytta av
+transkriberingstjänster för att senare använda sammanfattningstjänsster för
+att få en snabb överblick av materialet.
+
+\section{Syfte}
+\label{sec:purpose}
+Syftet med projektet är att utveckla en tjänst som erbjuder en automatiserad
+transkribering av YouTube-videor till text. 
 
 \subsection{Nomenklatur}
+\label{sec:nomenclature}
 För att underlätta förståelsen av projektet och dess tekniska aspekter
 presenteras här en kort förklaring av de termer som används i rapporten:
 \begin{itemize}
-    \item Hypertext Transfer Protocol (HTTP): Ett protokoll för överföring av
+    \item \textbf{Hypertext Transfer Protocol (HTTP)}: Ett protokoll för överföring av
     hypertextdokument.
-    \item Hypertext Transfer Protocol Secure (HTTPS): En säker version av HTTP
+    \item \textbf{Hypertext Transfer Protocol Secure (HTTPS)}: En säker version av HTTP
     som använder kryptering för att skydda dataöverföring.
-    \item HTTP Basic Authentication: En enkel autentiseringsmekanism inom
+    \item \textbf{HTTP Basic Authentication}: En enkel autentiseringsmekanism inom
     HTTP-protokollet.
-    \item Structured Query Language (SQL): Ett språk som används för att
+    \item \textbf{Structured Query Language (SQL)}: Ett språk som används för att
     hantera och manipulera relationsdatabaser.
-    \item Hypertext Markup Language (HTML): Standardspråket för att skapa och
+    \item \textbf{Hypertext Markup Language (HTML)}: Standardspråket för att skapa och
     strukturera sektioner på en webbsida.
-    \item eXtensible Markup Language (XML): Ett flexibelt textformat för att
+    \item \textbf{eXtensible Markup Language (XML)}: Ett flexibelt textformat för att
     organisera och transportera data
-    \item JavaScript Object Notation (JSON): Ett lättviktigt datautbytesformat
+    \item \textbf{JavaScript Object Notation (JSON)}: Ett lättviktigt datautbytesformat
     som är lätt för människor att läsa och skriva.
-    \item Cascading Style Sheets (CSS): Stilspråket som används för att
+    \item \textbf{Cascading Style Sheets (CSS)}: Stilspråket som används för att
     presentera ett dokument skrivet i HTML eller XML.
-    \item Application Programming Interface (API): En uppsättning definitioner
+    \item \textbf{Application Programming Interface (API)}: En uppsättning definitioner
     och protokoll för att bygga och integrera applikationsprogramvara.
-    \item Representational State Transfer (REST eller RESTful): En
+    \item \textbf{Representational State Transfer (REST eller RESTful)}: En
     arkitektonisk stil för att designa nätverksbaserade applikationer.
-    \item RESTful API: Ett API som använder HTTP-protokollet och REST-principer
+    \item \textbf{RESTful API}: Ett API som använder HTTP-protokollet och REST-principer
     för att skapa, läsa, uppdatera och ta bort data över webben. RESTful APIs
     är designade för att vara lättanvända och flexibla, vilket gör dem populära
     för webbapplikationsutveckling.
-    \item Artificiell Intelligens (AI): Teknik som syftar till att skapa
+    \item \textbf{Artificiell Intelligens (AI)}: Teknik som syftar till att skapa
     maskiner som kan utföra uppgifter som vanligtvis kräver mänsklig
     intelligens.
-    \item OpenAI Whisper: En AI-baserad transkriberingsteknik från
+    \item \textbf{OpenAI Whisper}: En AI-baserad transkriberingsteknik från
     OpenAI.
 \end{itemize}
 
-\section{Syfte}
-Syftet med YouTube Transcription Service är att erbjuda en automatiserad och
-användarvänlig tjänst som genererar texttranskriptioner av YouTube-videor till
-en åtkomlighet via samma webbsida. 
+\section{Metod och kravställning}
+\label{sec:method-and-requirements}
 
-\section{Metod}
-
-Plattformen bygger på en robust arkitektur där Apache Kafka hanterar köer av
-transkriptionsförfrågningar medan Apache ZooKeeper koordinerar
-konfigurationsdata. Go och Python används för att utveckla systemets
-bakgrundstjänster där OpenAI:s Whisper står för själva
-transkriberingsprocessen. Slutligen används MariaDB för att säkert lagra
-transkriptioner och användardata medan Docker underlättar driftsättningen av
-hela tjänsten på olika plattformar.
-
-YouTube Transcription Service önskar göra videomaterial mer tillgängligt och
-användbart. Genom att utnyttja skärningspunkten mellan avancerad AI och
-användarcentrerad design, bidrar projektet till att demokratisera tillgången
-till information.
-
-\subsection{Systemöversikt}
-Projektet syftar till att göra videomaterial mer tillgängligt genom att
-kombinera avancerad AI-teknologi med användarcentrerad design. Plattformen
-utnyttjar en robust arkitektur för att hantera transkriptionsprocessen från
-början till slut.
-
-\subsection{Klient-lager}
-
-\subsubsection{Grafiskt gränssnitt}
-Användargränssnittet är utformat för att vara intuitivt och lättanvänt,
-möjliggörande för användare att enkelt ladda upp eller ange URL:er till
-YouTube-videor för transkribering. Gränssnittet är utvecklat med HTML, CSS och
-JavaScript för att säkerställa responsivitet och tillgänglighet över olika
-enheter och webbläsare.
-
-\subsubsection{Programmatiskt gränssnitt}
-Det programmatiska gränssnittet förenklar användningen av systemet för
-automatiserade system som ämnar utöka funktionaliteten. 
-
-\subsection{Server-lager}
-
-\subsubsection{Applikationsserver}
-Bakgrundstjänsterna, utvecklade med Go och Python, hanterar logik för att ta
-emot och behandla transkriptionsförfrågningar. Systemet integrerar Apache
-Kafka för att hantera köer av transkriptionsförfrågningar, medan Apache
-ZooKeeper koordinerar konfigurationsdata. Detta säkerställer effektiv
-distribution och skalbarhet av tjänsten.
-
-\subsubsection{Transkriberingsmotor}
-OpenAI:s Whisper används för att utföra själva transkriberingen av videor.
-Denna AI-drivna motor garanterar hög noggrannhet i transkriptionen, vilket är
-avgörande för tillgängligheten och användbarheten av det transkriberade
-innehållet.
-
-\subsubsection{Databaslager}
-MySQL används för att säkert lagra användardata och de genererade
-transkriptionerna. Databasen är optimerad för att snabbt kunna hämta och lagra
-data, vilket underlättar en smidig användarupplevelse.
-
-\subsubsection{Säkerhet och autentisering}
-Systemet implementeras med grundläggande HTTP-autentisering för att säkerställa
-att endast auktoriserade användare skickar transkriptionsförfrågningar och
-får tillgång till sina resultat. Vidare används HTTPS för att kryptera all
-kommunikation mellan klienten och servern, skyddande användardata och
-transkriptioner från obehörig åtkomst.
-
-\subsection{Driftsättning}
-Docker underlättar driftsättningen av hela tjänsten på olika
-plattformar, vilket möjliggör en enhetlig och isolerad miljö för
-applikationen. Detta bidrar till enklare underhåll, skalbarhet och
-portabilitet av systemet.
-
-\section{Kravspecifikation}
+\subsection{Kravställning}
+\label{sec:requirements}
+Projektet har identifierat följande krav för att uppnå syftet:
+\begin{itemize}
+    \item \textbf{Tillgänglighet}: Plattformen ska vara tillgänglig för alla
+    användare oavsett teknisk kompetens genom att erbjuda ett webbaserat
+    grafiskt gränssnitt. Systemet ska även erbjuda ett programmatiskt
+    gränssnitt för automatiserade system.
+    \item \textbf{Skalbarhet}: Plattformen ska vara skalbar för att hantera
+    det krav som ställs då användning av AI-verktyg kan vara resurskrävande
+    [källa krävs].
+    \item \textbf{Noggrannhet}: Plattformen ska erbjuda en inställning för att
+    välja noggrannhetsnivå för transkribering för bekostnad av tid.
+    \item \textbf{Persistering}: Plattformen ska spara transkriberingar för
+    att möjliggöra åtkomst och analys av innehållet.
+    \item \textbf{Säkerhet}: Plattformen ska skydda kommunikationen och
+    transkriberingar från obehörig åtkomst genom att använda HTTPS för att
+    kryptera all kommunikation mellan klienten och servern. Grundläggande
+    HTTP-autentisering ska användas för att säkerställa att endast
+    auktoriserade användare skickar transkriptionsförfrågningar och får
+    tillgång till texterna.
+\end{itemize}
 
 \subsection{Användningsfall}
+\label{sec:use-cases}
 
-\subsubsection{Skapa konto}
-Jag som användare vill kunna skapa ett konto för att kunna begära
-transkriberingar till YouTube-videor.
+\begin{itemize}
+    \item \textbf{Logga in:} Jag som användare vill kunna logga in för att
+    kunna logga in för att kunna begära transkriberingar till YouTube-videor.
+    \item \textbf{Skapa transkribering:} Jag som användare vill kunna skapa en
+    transkribering genom att mata in en URL till en YouTube-video för att få
+    innehållet i videon utan att behöva kolla på den.
+    \item \textbf{Hämta transkribering:} Jag som användare vill kunna hämta en
+    transkribering genom att mata in en URL till en YouTube-video för att få
+    innehållet i videon utan att behöva kolla på den.
+\end{itemize}
 
-\subsubsection{Logga in}
-Jag som användare vill kunna logga in för att kunna begära transkriberingar
-till YouTube-videor.
+\section{Avgränsningar}
+\label{sec:limitations}
+Projektet fokuserar på att utveckla en transkriberingstjänst för
+YouTube-videor. Detta innebär att tjänsten inte kommer att stödja andra
+plattformar som Twitch eller Vimeo. Projektet kommer inte heller att stödja
+transkribering av ljudfiler eller andra typer av videofiler. Inget krav på
+språkstöd kommer att implementeras i projektet, vilket innebär att tjänsten
+inte behöver stödja transkribering av videor på andra språk än engelska.
 
-\subsubsection{Skapa transkribering}
-Jag som användare vill kunna skapa en transkribering genom att mata in en URL
-till en YouTube-video för att få innehållet i videon utan att behöva kolla på
-den.
+Tjänsten behöver inte stödja att användare kan registrera sig och skapa
+användarkonton. Då tjänsten har autentisering som krav så kommer istället
+hårdkodade användarnamn och lösenord att användas för att autentisera
+klienter.
 
-\subsubsection{Hämta transkribering}
-Jag som användare vill kunna hämta en transkribering genom att mata in en URL
-till en YouTube-video för att få innehållet i videon utan att behöva kolla på
-den.
+\subsection{Metod}
+\label{sec:method}
+Projektet nyttjar GitHub för versionshantering och projektledning. Issues och
+pull requests används för att hantera arbetsuppgifter och kodgranskning. 
+GitHubs inbyggda projektverktyg används för att hantera projektets tidsplan 
+som syns i \ref{timeplan}. 
 
 \subsection{Tidsplan}
+\label{sec:timeplan}
 Se Figur \ref{fig:gantt}.
