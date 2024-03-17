@@ -89,4 +89,14 @@ func Api(engine *gin.Engine, producer *kafka.Producer, queries *Queries) {
 	api.GET("/transcribe/:id", func(c *gin.Context) {
 		transcribe(c, producer, queries)
 	})
+
+	api.GET("/transcriptions", func(c *gin.Context) {
+		transcriptions, err := queries.ListTranscriptions(c)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"message": " Failed to list transcriptions"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "success", "transcriptions": transcriptions})
+	})
 }
