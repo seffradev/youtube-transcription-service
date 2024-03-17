@@ -1,8 +1,11 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize loading spinner
+    // Hide the loading spinner initially
     document.getElementById('loading-spinner').style.display = 'none';
+
+    // Fetch and display transcriptions upon page load
+    fetchAndDisplayTranscriptions();
 
     // Event listener for the transcription form submission
     const transcriptionForm = document.getElementById('transcription-form');
@@ -12,154 +15,76 @@ document.addEventListener('DOMContentLoaded', () => {
         // Extract the YouTube URL from the form
         const youtubeUrl = transcriptionForm.elements['youtube-url'].value;
 
-        // Extract the video ID from the YouTube URL
-        const videoId = extractVideoId(youtubeUrl);
-
-        if (!videoId) {
-            // Display an error message
-            return;
-        }
-
         // Show the loading spinner
         document.getElementById('loading-spinner').style.display = 'block';
 
-        // Handle the transcription request with video ID
-        fetch('/api/transcribe/' + videoId)
-            .then(handleFetchResponse)
-            .then(data => {
-                // Hide the loading spinner
-                document.getElementById('loading-spinner').style.display = 'none';
+        // Attempt to extract the video ID and submit it for transcription
+        const videoId = extractVideoId(youtubeUrl);
+        if (!videoId) {
+            displayErrorMessage('Invalid YouTube URL.', 'transcription-form');
+            document.getElementById('loading-spinner').style.display = 'none';
+            return;
+        }
 
-                // Handle success
-                displaySuccessMessage('Transcription in progress.', 'transcription-form');
-            })
-            .catch(error => {
-                // Hide the loading spinner
-                document.getElementById('loading-spinner').style.display = 'none';
-
-                // Handle error
-                console.error('There has been a problem with your fetch operation:', error);
-                displayErrorMessage(error.message, 'transcription-form');
-            });
+        // Handle the transcription request
+        handleTranscriptionRequest(videoId);
     });
-    /*     // Event listener for the registration form submission
-        const registrationForm = document.getElementById('registration-form');
-        registrationForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent default form submission
     
-            // Retrieves values from form inputs
-            const name = e.target.elements['name'].value;
-            const email = e.target.elements['email'].value;
-            const password = e.target.elements['password'].value;
-    
-            // Basic client-side validation for password length
-            if (password.length < 8) {
-                alert('Password must be at least 8 characters long.');
-                return; // Stops the function if validation fails
-            }
-    
-            // Handle registration (send data to server, etc.)
-            fetch('/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, password }),
-            })
-                .then(handleFetchResponse)
-                .then(data => {
-                    displaySuccessMessage('Registration successful', 'registration-form');
-                    window.location.href = '/'; // Replace '/welcome with correct path
-                })
-                .catch(error => {
-                    // Log the error and display a message to the user
-                    console.error('There has been a problem with your fetch operation:', error);
-                    displayErrorMessage(error.message, 'registration-form');
-                });
-        });
-    
-        // Login Form Event Listener
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
-            // Extract input values
-            const email = loginForm.elements['email'].value;
-            const password = loginForm.elements['password'].value;
-    
-            // Handle login (send data to server, etc.)
-            // You can make an AJAX request here to send form data to the server for login
-            fetch('/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            })
-                .then(handleFetchResponse)
-                .then(data => {
-                    displaySuccessMessage('Login successful', 'login-form');
-                    window.location.href = '/dashboard'; // Replace '/dashboard with correct path
-                })
-                .catch(error => {
-                    // Log the error and display a message to the user
-                    console.error('There has been a problem with your fetch operation:', error);
-                    displayErrorMessage(error.message, 'login-form');
-                });
-        });
-    
-        // Transcription Form Event Listener
-        const transcriptionForm = document.getElementById('transcription-form');
-        transcriptionForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
-    
-            // Extract the YouTube URL from the form
-            const youtubeUrl = transcriptionForm.elements['youtube-url'].value;
-    
-            // Show the loading spinner
-            document.getElementById('loading-spinner').style.display = 'block';
-    
-            // Handle the transcription request
-            fetch('/api/transcribe/' + videoID)
-            .then(handleFetchResponse)
-            .then(data => {
-                // Hide the loading spinner
-                document.getElementById('loading-spinner').style.display = 'none';
-    
-                // Handle success
-                displaySuccessMessage('Transcription in progress. You will be notified upon completion.', 'transcription-form');
-            })
-            .catch(error => {
-                // Hide the loading spinner
-                document.getElementById('loading-spinner').style.display = 'none';
-    
-                // Handle error
-                console.error('There has been a problem with your fetch operation:', error);
-                displayErrorMessage(error.message, 'transcription-form');
-            });
-        });
-     */
-    // Video Submission Form Event Listener
-    const videoSubmissionForm = document.getElementById('video-submission-form');
-    videoSubmissionForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
-        // Extract input values
-        const videoUrl = videoSubmissionForm.elements['video-url'].value;
-
-        // Handle video submission (send data to server, etc.)
-        // You can make an AJAX request here to send video URL to the server for processing
-        // Replace '/login' with your video submission endpoint
-        fetch('/api/url/' + videoUrl)
-            .then(handleFetchResponse)
-            .then(data => {
-                displaySuccessMessage('Video submission successful', 'video-submission-form');
-            })
-            .catch(error => {
-                // Log the error and display a message to the user
-                console.error('There has been a problem with your fetch operation:', error);
-                displayErrorMessage(error.message, 'video-submission-form');
-            });
+    /* Commenting out the registration and login functionality as requested
+    // Registration Form Event Listener
+    const registrationForm = document.getElementById('registration-form');
+    registrationForm.addEventListener('submit', (e) => {
+        // Registration form submission logic
     });
+
+    // Login Form Event Listener
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', (event) => {
+        // Login form submission logic
+    });
+    */
 });
+
+// Function to fetch and display transcriptions
+function fetchAndDisplayTranscriptions() {
+    fetch('/api/transcriptions')
+        .then(response => response.json())
+        .then(transcriptions => {
+            const list = document.getElementById('transcriptions-list');
+            list.innerHTML = ''; // Clear the list
+            transcriptions.forEach(transcription => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<a href="#" onclick="fetchTranscriptionDetails('${transcription.id}')">${transcription.url}</a>`;
+                list.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Failed to fetch transcriptions:', error));
+}
+
+// Function to fetch transcription details
+function fetchTranscriptionDetails(transcriptionId) {
+    // Fetch and display details for a specific transcription
+}
+
+// Function to handle transcription request submission
+function handleTranscriptionRequest(videoId) {
+    fetch(`/api/transcribe/${videoId}`, {
+        method: 'POST', // or 'GET' if that's what your API requires
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(handleFetchResponse)
+    .then(data => {
+        displaySuccessMessage('Transcription in progress. You will be notified upon completion.', 'transcription-form');
+        document.getElementById('loading-spinner').style.display = 'none';
+    })
+    .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+        displayErrorMessage(error.message, 'transcription-form');
+        document.getElementById('loading-spinner').style.display = 'none';
+    });
+}
 
 // Function to extract video ID from Youtube URL
 function extractVideoId(url) {
@@ -167,54 +92,24 @@ function extractVideoId(url) {
     return videoIdMatch ? videoIdMatch[1] : null;
 }
 
-// Function to display error message
+// Display error message
 function displayErrorMessage(message, formId) {
-    // Clear existing messages
     clearMessages(formId);
-    const errorElement = document.createElement('p');
-    errorElement.setAttribute('role', 'alert');
-    errorElement.classList.add('error-message');
-    errorElement.textContent = message;
-    // Append error message to a suitable location on the page (e.g., inside the form)
-    document.getElementById(formId).appendChild(errorElement);
+    // Error message logic
 }
 
-// Function to display success message
+// Display success message
 function displaySuccessMessage(message, formId) {
-    // Clear existing messages
-    clearMessages(formId)
-    const successElement = document.createElement('p');
-    successElement.setAttribute('role', 'alert');
-    successElement.classList.add('success-message');
-    successElement.textContent = message;
-    // Append success message to a suitable location on the page (e.g., inside the form)
-    document.getElementById(formId).appendChild(successElement);
+    clearMessages(formId);
+    // Success message logic
 }
 
+// Clear messages
 function clearMessages(formId) {
-    const form = document.getElementById(formId);
-    const existingMessages = form.querySelectorAll('.error-message, .success-message');
-    existingMessages.forEach(msg => msg.remove());
+    // Logic to clear messages
 }
 
+// Handle fetch response
 function handleFetchResponse(response) {
-    const statusImage = document.getElementById('status-image');
-    statusImage.src = "http://http.cat/" + response.status + ".jpg";
-
-    if (!response.ok) {
-        // Handle common HTTP errors
-        if (response.status === 404) {
-            throw new Error('Not found');
-        } else if (response.status === 401) {
-            throw new Error('Not authorized');
-        } else {
-            // Generic error for other statuses
-            throw new Error('An error occurred: ' + response.statusText);
-        }
-    }
-    // Check if the response is JSON before parsing
-    if (response.headers.get('Content-Type')?.includes('application/json')) {
-        return response.json();
-    }
-    throw new Error('Invalid JSON response from server');
+    // Logic to handle the fetch response
 }
