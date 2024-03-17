@@ -42,12 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function fetchAndDisplayTranscriptions() {
     fetch('/api/transcriptions')
         .then(response => response.json())
-        .then(transcriptions => {
+        .then(response => {
             const list = document.getElementById('transcriptions-list');
             list.innerHTML = ''; // Clear the list
+            transcriptions = response.transcriptions || [];
             transcriptions.forEach(transcription => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<a href="#" onclick="fetchTranscriptionDetails('${transcription.id}')">${transcription.url}</a>`;
+                listItem.innerHTML = `<a href="/transcriptions/${transcription.id}">${transcription.id} - ${transcription.requested_at} - ${transcription.completed_at}</a>`;
                 list.appendChild(listItem);
             });
         })
