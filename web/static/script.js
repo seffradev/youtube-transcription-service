@@ -1,9 +1,6 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Hide the loading spinner initially
-    document.getElementById('loading-spinner').style.display = 'none';
-
     // Fetch and display transcriptions upon page load
     fetchAndDisplayTranscriptions();
 
@@ -15,14 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Extract the YouTube URL from the form
         const youtubeUrl = transcriptionForm.elements['youtube-url'].value;
 
-        // Show the loading spinner
-        document.getElementById('loading-spinner').style.display = 'block';
-
         // Attempt to extract the video ID and submit it for transcription
         const videoId = extractVideoId(youtubeUrl);
         if (!videoId) {
             displayErrorMessage('Invalid YouTube URL.', 'transcription-form');
-            document.getElementById('loading-spinner').style.display = 'none';
             return;
         }
 
@@ -77,12 +70,10 @@ function handleTranscriptionRequest(videoId) {
     .then(handleFetchResponse)
     .then(data => {
         displaySuccessMessage('Transcription in progress. You will be notified upon completion.', 'transcription-form');
-        document.getElementById('loading-spinner').style.display = 'none';
     })
     .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
         displayErrorMessage(error.message, 'transcription-form');
-        document.getElementById('loading-spinner').style.display = 'none';
     });
 }
 
