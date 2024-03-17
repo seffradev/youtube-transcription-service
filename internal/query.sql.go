@@ -39,11 +39,11 @@ LIMIT 1
 `
 
 type GetTranscriptionRow struct {
-	ID          string
-	Text        sql.NullString
-	Status      TranscriptionStatus
-	RequestedAt time.Time
-	CompletedAt sql.NullTime
+	ID          string              `json:"id"`
+	Text        sql.NullString      `json:"text"`
+	Status      TranscriptionStatus `json:"status"`
+	RequestedAt time.Time           `json:"requested_at"`
+	CompletedAt sql.NullTime        `json:"completed_at"`
 }
 
 func (q *Queries) GetTranscription(ctx context.Context, id string) (GetTranscriptionRow, error) {
@@ -70,10 +70,10 @@ FROM
 `
 
 type ListTranscriptionsRow struct {
-	ID          string
-	Status      TranscriptionStatus
-	RequestedAt time.Time
-	CompletedAt sql.NullTime
+	ID          string              `json:"id"`
+	Status      TranscriptionStatus `json:"status"`
+	RequestedAt time.Time           `json:"requested_at"`
+	CompletedAt sql.NullTime        `json:"completed_at"`
 }
 
 func (q *Queries) ListTranscriptions(ctx context.Context) ([]ListTranscriptionsRow, error) {
@@ -116,9 +116,9 @@ WHERE
 `
 
 type UpdateTranscriptionParams struct {
-	Text   sql.NullString
-	Status TranscriptionStatus
-	ID     string
+	Text   sql.NullString      `json:"text"`
+	Status TranscriptionStatus `json:"status"`
+	ID     string              `json:"id"`
 }
 
 func (q *Queries) UpdateTranscription(ctx context.Context, arg UpdateTranscriptionParams) (sql.Result, error) {

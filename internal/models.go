@@ -33,8 +33,8 @@ func (e *TranscriptionStatus) Scan(src interface{}) error {
 }
 
 type NullTranscriptionStatus struct {
-	TranscriptionStatus TranscriptionStatus
-	Valid               bool // Valid is true if TranscriptionStatus is not NULL
+	TranscriptionStatus TranscriptionStatus `json:"transcription_status"`
+	Valid               bool                `json:"valid"` // Valid is true if TranscriptionStatus is not NULL
 }
 
 // Scan implements the Scanner interface.
@@ -56,9 +56,9 @@ func (ns NullTranscriptionStatus) Value() (driver.Value, error) {
 }
 
 type Transcription struct {
-	ID          string
-	Status      TranscriptionStatus
-	Text        sql.NullString
-	RequestedAt time.Time
-	CompletedAt sql.NullTime
+	ID          string              `json:"id"`
+	Status      TranscriptionStatus `json:"status"`
+	Text        sql.NullString      `json:"text"`
+	RequestedAt time.Time           `json:"requested_at"`
+	CompletedAt sql.NullTime        `json:"completed_at"`
 }
