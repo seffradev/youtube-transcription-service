@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle the transcription request
         handleTranscriptionRequest(videoId);
     });
-    
+
     /*
     // Registration Form Event Listener
     const registrationForm = document.getElementById('registration-form');
