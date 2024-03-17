@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         handleTranscriptionRequest(videoId);
     });
     
-    /* Commenting out the registration and login functionality as requested
+    /*
     // Registration Form Event Listener
     const registrationForm = document.getElementById('registration-form');
     registrationForm.addEventListener('submit', (e) => {
