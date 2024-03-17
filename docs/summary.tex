@@ -6,6 +6,16 @@ För transkribering nyttjar systemet OpenAI:s Whisper, Apache Kafka för
 att hantera transkriberingsförfrågningar, MySQL för datalagring och är
 utvecklat med Go, Python, HTML, CSS och JavaScript.
 
+Det färdiga systemet är en webbapplikation som kan transkribera
+YouTube-videor. Användare kan autentisera sig med ett hårdkodat
+användarnamn och lösenord via HTTP Basic Authentication. Efter
+autentisering får användaren utrymme att begära transkribieringar. Varje
+transkribering skickas till en kö som hanteras av Apache Kafka. En
+separat komponent, transkriberingsmotorn, hämtar transkriberingsförfrågningar
+från kön och transkriberar videorna med hjälp av OpenAI:s Whisper. När
+transkriberingen är klar finns den tillgänglig för användaren att hämta
+via webbapplikationen. 
+
 \vfill
 \begin{table}[ht!]
     \centering
