@@ -1,14 +1,17 @@
 \chapter{Resultat}
+\label{ch:result}
 
 \section{Allmän systembeskrivning}
+\label{sec:general-system-description}
 Det färdiga systemet är en webbapplikation som tillåter användare att
 transkribera YouTube-videor. Användare kan autentisera sig med ett hårdkodat
-användarnamn och lösenord via HTTP Basic Authentication. Efter autentisering
-får användaren utrymme att begära transkriberingar. Varje transkribering 
-skickas till en kö som hanteras av Apache Kafka. En separat komponent, 
-transkriberingsmotorn, hämtar transkriberingsförfrågningar från kön och
-transkriberar videorna med hjälp av OpenAI:s Whisper. När transkriberingen är
-klar finns den tillgänglig för användaren att hämta via webbapplikationen.
+användarnamn och lösenord via HTTP Basic Authentication [källa krävs]. Efter
+autentisering får användaren utrymme att begära transkriberingar. Varje
+transkribering skickas till en kö som hanteras av Apache Kafka [källa krävs].
+En separat komponent, transkriberingsmotorn, hämtar
+transkriberingsförfrågningar från kön och transkriberar videorna med hjälp av
+OpenAI:s Whisper \cite{OpenAIWhisper}. När transkriberingen är klar finns den
+tillgänglig för användaren att hämta via webbapplikationen.
 
 \begin{figure}[h]
     \centering
@@ -18,58 +21,69 @@ klar finns den tillgänglig för användaren att hämta via webbapplikationen.
 \end{figure}
 
 \section{Komponenter}
+\label{sec:components}
 
 \subsection{Transkriberingskö}
+\label{sec:transcription-queue}
 Transkriberingskön innehåller meddelanden med URL:er till YouTube-videor som
 ska transkriberas. I dessa meddelanden ingår även information om vem som
 begärde transkriberingen. Transkriberingskön är en separat komponent som drivs
-av Apache Kafka.
+av Apache Kafka [källa krävs].
 
 \subsection{Transkriberingsmotor}
-Transkriberingsmotorn är en separat komponent implementerad i Python som
-hämtar meddelanden från transkriberingskön. Varje meddelande innehåller ett
-ID som relaterar till en YouTube-video. Transkriberingsmotorn hämtar videor
-från YouTube och transkriberar dem med hjälp av OpenAI:s Whisper. När
-transkriberingen är klar läggs den till i databasen och videofilen raderas
-från disk. Flödesdiagram för hur tjänsten arbetar är enligt Figur
+\label{sec:transcription-engine}
+Transkriberingsmotorn är en separat komponent implementerad i Python [källa
+krävs] som hämtar meddelanden från transkriberingskön. Varje meddelande
+innehåller ett ID som relaterar till en YouTube-video. Transkriberingsmotorn
+hämtar videor från YouTube och transkriberar dem med hjälp av OpenAI:s Whisper
+med inställning \verb|small| \cite{OpenAIWhisper}. När transkriberingen är
+klar läggs den till i databasen och videofilen raderas från disk.
+Flödesdiagram för hur tjänsten arbetar är enligt Figur
 \ref{fig:transcription-flowchart}. 
 
 \subsection{Webbapplikation}
-Webbapplikationen, implementerad i Go med ramverket Gin, tillåter klienter att
-autentisera sig och begära transkriberingar. Webbapplikationen är en separat
-komponent som vid förfrågan kontrollerar om klienten är autentiserad och om
-efterfrågad transkribering inte redan finns i databasen. Om transkriberingen
-inte finns i databasen skickas ett meddelande till transkriberingskön som
-transkriberingsmotorn lyssnar på. För flödesdiagram hur webbapplikationen
-fungerar, se Figur \ref{fig:system-flowchart}.
+\label{sec:web-application}
+Webbapplikationen, implementerad i Go med ramverket Gin \cite{GinGonic},
+tillåter klienter att autentisera sig och begära transkriberingar.
+Webbapplikationen är en separat komponent som vid förfrågan kontrollerar om
+klienten är autentiserad och om efterfrågad transkribering inte redan finns i
+databasen. Om transkriberingen inte finns i databasen skickas ett meddelande
+till transkriberingskön som transkriberingsmotorn lyssnar på. För
+flödesdiagram hur webbapplikationen fungerar, se Figur
+\ref{fig:system-flowchart}.
 
 Tillhörande webbapplikationen finns ett grafiskt gränssnitt och är
 implementerad i HTML, CSS och JavaScript. Det låter klienter autentisera sig
 och begära transkriberingar. 
 
 \subsection{Databas}
+\label{sec:database}
 Databasen är en separat nod som lagrar transkriberingar. Databasen är en
 instans av den relationella databasen MySQL och driftas på Lightsail på Amazon
-Web Services.
+Web Services [källa krävs].
 
 \section{Kommunikation}
-Namnhantering för tjänsterna sköts via Apache ZooKeeper och Docker Compose
-som har en inbyggd DNS-översättning [källa krävs]. Tjänsterna kommunicerar med
-varandra via HTTP och Kafka Topics. Webbapplikationen är en producent till
-transkriberingskön, medan transkriberingsmotorn är en konsument. 
+\label{sec:communication}
+Namnhantering för tjänsterna sköts via Apache ZooKeeper och
+Docker Compose som har en inbyggd DNS-översättning [källa krävs, 1, 2].
+Tjänsterna kommunicerar med varandra via HTTP och Kafka Topics.
+Webbapplikationen är en producent till transkriberingskön, medan
+transkriberingsmotorn är en konsument. 
 
 \section{Säkerhet}
-Systemet bygger på HTTP Basic Authentication för att autentisera användare.
-Autentiseringen är hårdkodad till användarnamnet \verb|foo| och lösenordet
-\verb|bar|. Kommunikationen mellan klienten och servern är krypterad med
-HTTPS via Cloudflare.
+\label{sec:security}
+Systemet bygger på HTTP Basic Authentication [källa krävs] för att autentisera
+användare. Autentiseringen är hårdkodad till användarnamnet \verb|foo| och
+lösenordet \verb|bar|. Kommunikationen mellan klienten och servern är
+krypterad med HTTPS via Cloudflare.
 
 \section{Skalbarhet}
+\label{sec:scalability}
 Systemet i Figur \ref{fig:system-nodes} består av flera separata komponenter
 som kan köras på olika maskiner eller i olika Docker-containrar. Det är möjligt
 att lägga till fler instanser av transkriberingsmotorn, webbapplikationen,
 Apache Kafka, MariaDB och Apache ZooKeeper för att öka kapaciteten. Det är
 också möjligt att lägga till en lastbalanserare och en proxy för att dela upp
 trafiken till flera instanser av webbapplikationen. Systemet är byggt enligt
-arkitekturtermen ''microservices'' och ger horisontell skalbarhet samt ökad
-feltolerans.
+arkitekturtermen ''microservices'' [källa krävs] och ger horisontell
+skalbarhet samt ökad feltolerans.
