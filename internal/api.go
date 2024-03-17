@@ -36,11 +36,11 @@ func transcribe(c *gin.Context, producer *kafka.Producer, queries *Queries) {
 
 	if transcription.Status == "failed" {
 		log.Println("URL ID failed to transcribe:", id)
-        updateTranscription := UpdateTranscriptionParams{
-            ID: id,
-            Status: TranscriptionStatusPending,
-            Text: sql.NullString{},
-        }
+		updateTranscription := UpdateTranscriptionParams{
+			ID:     id,
+			Status: TranscriptionStatusPending,
+			Text:   sql.NullString{},
+		}
 
 		result, err := queries.UpdateTranscription(c, updateTranscription)
 		if err != nil {
@@ -49,13 +49,13 @@ func transcribe(c *gin.Context, producer *kafka.Producer, queries *Queries) {
 			return
 		}
 
-        count, err := result.RowsAffected()
+		count, err := result.RowsAffected()
 
-        if err != nil || count == 0 {
-            log.Println("URL ID failed to transcribe:", id)
-            c.JSON(http.StatusInternalServerError, gin.H{"message": "URL failed to transcribe"})
-            return
-        }
+		if err != nil || count == 0 {
+			log.Println("URL ID failed to transcribe:", id)
+			c.JSON(http.StatusInternalServerError, gin.H{"message": "URL failed to transcribe"})
+			return
+		}
 
 		producer.Produce(&kafka.Message{
 			TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
