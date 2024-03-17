@@ -48,7 +48,11 @@ function fetchAndDisplayTranscriptions() {
             transcriptions = response.transcriptions || [];
             transcriptions.forEach(transcription => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<a href="/transcriptions/${transcription.id}">${transcription.id} - ${transcription.requested_at} - ${transcription.completed_at}</a>`;
+                if (transcription.completed_at.Valid ) {
+                    listItem.innerHTML = `<a href="/transcriptions/${transcription.id}">${transcription.id} - ${transcription.requested_at} - ${transcription.completed_at.Time} - ${transcription.status}</a>`;
+                } else {
+                    listItem.innerHTML = `<a href="/transcriptions/${transcription.id}">${transcription.id} - ${transcription.requested_at} - In Progress - ${transcription.status}</a>`;
+                }
                 list.appendChild(listItem);
             });
         })
