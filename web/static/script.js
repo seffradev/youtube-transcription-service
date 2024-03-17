@@ -1,107 +1,143 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Event listener for the registration form submission
-    const registrationForm = document.getElementById('registration-form');
-    registrationForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent default form submission
-        // Retrieves values from form inputs
-        const name = e.target.elements['name'].value;
-        const email = e.target.elements['email'].value;
-        const password = e.target.elements['password'].value;
+    // Initialize loading spinner
+    document.getElementById('loading-spinner').style.display = 'none';
 
-        // Basic client-side validation for password length
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters long.');
-            return; // Stops the function if validation fails
-        }
-
-        // Handle registration (send data to server, etc.)
-        fetch('/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, password }),
-        })
-            .then(handleFetchResponse)
-            .then(data => {
-                displaySuccessMessage('Registration successful', 'registration-form');
-                window.location.href = '/'; // Replace '/welcome with correct path
-            })
-            .catch(error => {
-                // Log the error and display a message to the user
-                console.error('There has been a problem with your fetch operation:', error);
-                displayErrorMessage(error.message, 'registration-form');
-            });
-    });
-
-    // Login Form Event Listener
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
-        // Extract input values
-        const email = loginForm.elements['email'].value;
-        const password = loginForm.elements['password'].value;
-
-        // Handle login (send data to server, etc.)
-        // You can make an AJAX request here to send form data to the server for login
-        fetch('/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-            .then(handleFetchResponse)
-            .then(data => {
-                displaySuccessMessage('Login successful', 'login-form');
-                window.location.href = '/dashboard'; // Replace '/dashboard with correct path
-            })
-            .catch(error => {
-                // Log the error and display a message to the user
-                console.error('There has been a problem with your fetch operation:', error);
-                displayErrorMessage(error.message, 'login-form');
-            });
-    });
-
-    // Transcription Form Event Listener
+    // Event listener for the transcription form submission
     const transcriptionForm = document.getElementById('transcription-form');
-    transcriptionForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
+    transcriptionForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent default form submission
 
         // Extract the YouTube URL from the form
         const youtubeUrl = transcriptionForm.elements['youtube-url'].value;
 
+        // Extract the video ID from the YouTube URL
+        const videoId = extractVideoId(youtubeUrl);
+
+        if (!videoId) {
+            // Display an error message
+            return;
+        }
+
         // Show the loading spinner
         document.getElementById('loading-spinner').style.display = 'block';
 
-        // Handle the transcription request
-        fetch('/api/transcribe', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ url: youtubeUrl }),
-        })
-        .then(handleFetchResponse)
-        .then(data => {
-            // Hide the loading spinner
-            document.getElementById('loading-spinner').style.display = 'none';
+        // Handle the transcription request with video ID
+        fetch('/api/transcribe/' + videoId)
+            .then(handleFetchResponse)
+            .then(data => {
+                // Hide the loading spinner
+                document.getElementById('loading-spinner').style.display = 'none';
 
-            // Handle success
-            displaySuccessMessage('Transcription in progress. You will be notified upon completion.', 'transcription-form');
-        })
-        .catch(error => {
-            // Hide the loading spinner
-            document.getElementById('loading-spinner').style.display = 'none';
+                // Handle success
+                displaySuccessMessage('Transcription in progress.', 'transcription-form');
+            })
+            .catch(error => {
+                // Hide the loading spinner
+                document.getElementById('loading-spinner').style.display = 'none';
 
-            // Handle error
-            console.error('There has been a problem with your fetch operation:', error);
-            displayErrorMessage(error.message, 'transcription-form');
-        });
+                // Handle error
+                console.error('There has been a problem with your fetch operation:', error);
+                displayErrorMessage(error.message, 'transcription-form');
+            });
     });
-
+    /*     // Event listener for the registration form submission
+        const registrationForm = document.getElementById('registration-form');
+        registrationForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent default form submission
+    
+            // Retrieves values from form inputs
+            const name = e.target.elements['name'].value;
+            const email = e.target.elements['email'].value;
+            const password = e.target.elements['password'].value;
+    
+            // Basic client-side validation for password length
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return; // Stops the function if validation fails
+            }
+    
+            // Handle registration (send data to server, etc.)
+            fetch('/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password }),
+            })
+                .then(handleFetchResponse)
+                .then(data => {
+                    displaySuccessMessage('Registration successful', 'registration-form');
+                    window.location.href = '/'; // Replace '/welcome with correct path
+                })
+                .catch(error => {
+                    // Log the error and display a message to the user
+                    console.error('There has been a problem with your fetch operation:', error);
+                    displayErrorMessage(error.message, 'registration-form');
+                });
+        });
+    
+        // Login Form Event Listener
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+            // Extract input values
+            const email = loginForm.elements['email'].value;
+            const password = loginForm.elements['password'].value;
+    
+            // Handle login (send data to server, etc.)
+            // You can make an AJAX request here to send form data to the server for login
+            fetch('/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            })
+                .then(handleFetchResponse)
+                .then(data => {
+                    displaySuccessMessage('Login successful', 'login-form');
+                    window.location.href = '/dashboard'; // Replace '/dashboard with correct path
+                })
+                .catch(error => {
+                    // Log the error and display a message to the user
+                    console.error('There has been a problem with your fetch operation:', error);
+                    displayErrorMessage(error.message, 'login-form');
+                });
+        });
+    
+        // Transcription Form Event Listener
+        const transcriptionForm = document.getElementById('transcription-form');
+        transcriptionForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            // Extract the YouTube URL from the form
+            const youtubeUrl = transcriptionForm.elements['youtube-url'].value;
+    
+            // Show the loading spinner
+            document.getElementById('loading-spinner').style.display = 'block';
+    
+            // Handle the transcription request
+            fetch('/api/transcribe/' + videoID)
+            .then(handleFetchResponse)
+            .then(data => {
+                // Hide the loading spinner
+                document.getElementById('loading-spinner').style.display = 'none';
+    
+                // Handle success
+                displaySuccessMessage('Transcription in progress. You will be notified upon completion.', 'transcription-form');
+            })
+            .catch(error => {
+                // Hide the loading spinner
+                document.getElementById('loading-spinner').style.display = 'none';
+    
+                // Handle error
+                console.error('There has been a problem with your fetch operation:', error);
+                displayErrorMessage(error.message, 'transcription-form');
+            });
+        });
+     */
     // Video Submission Form Event Listener
     const videoSubmissionForm = document.getElementById('video-submission-form');
     videoSubmissionForm.addEventListener('submit', function (event) {
@@ -124,6 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 });
+
+// Function to extract video ID from Youtube URL
+function extractVideoId(url) {
+    const videoIdMatch = url.match(/[?&]v=([^?&]+)/);
+    return videoIdMatch ? videoIdMatch[1] : null;
+}
 
 // Function to display error message
 function displayErrorMessage(message, formId) {
@@ -167,7 +209,7 @@ function handleFetchResponse(response) {
             throw new Error('Not authorized');
         } else {
             // Generic error for other statuses
-            throw new Error('An error occured: ' + response.statusText);
+            throw new Error('An error occurred: ' + response.statusText);
         }
     }
     // Check if the response is JSON before parsing
