@@ -59,10 +59,9 @@ func (q *Queries) GetTranscription(ctx context.Context, id string) (GetTranscrip
 	return i, err
 }
 
-const listTranscription = `-- name: ListTranscription :many
+const listTranscriptions = `-- name: ListTranscriptions :many
 SELECT
     id,
-    text,
     status,
     requested_at,
     completed_at
@@ -70,26 +69,24 @@ FROM
     transcription
 `
 
-type ListTranscriptionRow struct {
+type ListTranscriptionsRow struct {
 	ID          string
-	Text        sql.NullString
 	Status      TranscriptionStatus
 	RequestedAt time.Time
 	CompletedAt sql.NullTime
 }
 
-func (q *Queries) ListTranscription(ctx context.Context) ([]ListTranscriptionRow, error) {
-	rows, err := q.db.QueryContext(ctx, listTranscription)
+func (q *Queries) ListTranscriptions(ctx context.Context) ([]ListTranscriptionsRow, error) {
+	rows, err := q.db.QueryContext(ctx, listTranscriptions)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []ListTranscriptionRow
+	var items []ListTranscriptionsRow
 	for rows.Next() {
-		var i ListTranscriptionRow
+		var i ListTranscriptionsRow
 		if err := rows.Scan(
 			&i.ID,
-			&i.Text,
 			&i.Status,
 			&i.RequestedAt,
 			&i.CompletedAt,

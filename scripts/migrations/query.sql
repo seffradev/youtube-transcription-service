@@ -11,10 +11,9 @@ WHERE
     id = ?
 LIMIT 1;
 
--- name: ListTranscription :many
+-- name: ListTranscriptions :many
 SELECT
     id,
-    text,
     status,
     requested_at,
     completed_at
